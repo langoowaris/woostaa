@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOOSTAA - Work Simplified</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-pattern {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                            url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Launch Banner -->
+    <div class="bg-blue-600 text-white text-center py-3 sticky top-0 z-50">
+        <p class="text-lg font-semibold animate-pulse">🎉 Launching Soon in Bangalore! Stay Tuned for Amazing Services! 🚀</p>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-pattern bg-fixed">
+        <div class="flex flex-col items-center justify-center p-6 h-full">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold text-blue-600 mb-4">WOOSTAA</h1>
+                <p class="text-xl md:text-3xl font-medium text-gray-700 mb-6">Work Simplified.</p>
+                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+                    Find reliable maids, cooks, drivers, and more—trusted home services at your doorstep.
+                </p>
+                <a href="#footer" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                    Notify Me on Launch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 px-6 bg-white" id="services">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold text-center text-blue-600 mb-12">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Maid Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-house-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Maids</h3>
+                    <p class="text-gray-600">Home cleaning and housekeeping services.</p>
+                </div>
+
+                <!-- Cook Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-cup-hot-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Cooks</h3>
+                    <p class="text-gray-600">Expert chefs for daily or event-based cooking.</p>
+                </div>
+
+                <!-- Driver Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-car-front-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Drivers</h3>
+                    <p class="text-gray-600">Professional drivers for short or long trips.</p>
+                </div>
+
+                <!-- Car Washer Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-truck text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Car Washers</h3>
+                    <p class="text-gray-600">On-demand car cleaning services.</p>
+                </div>
+
+                <!-- Tutor Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-book-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Tutors</h3>
+                    <p class="text-gray-600">Qualified tutors for various subjects.</p>
+                </div>
+
+                <!-- Massager Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-heart-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Massagers</h3>
+                    <p class="text-gray-600">Professional massage therapists.</p>
+                </div>
+
+                <!-- Helper Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-people-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Helpers</h3>
+                    <p class="text-gray-600">General assistance for household tasks.</p>
+                </div>
+
+                <!-- Plumber Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-tools text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Plumbers</h3>
+                    <p class="text-gray-600">Skilled workers for plumbing issues.</p>
+                </div>
+
+                <!-- Carpenter Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-hammer text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Carpenters</h3>
+                    <p class="text-gray-600">Woodwork and furniture repair services.</p>
+                </div>
+
+                <!-- Electrician Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-lightning-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Electricians</h3>
+                    <p class="text-gray-600">Electrical repairs and installations.</p>
+                </div>
+
+                <!-- Barber (Home Salon) Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                    <i class="bi bi-scissors text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Barbers (Home Salon)</h3>
+                    <p class="text-gray-600">Professional haircuts and grooming at your doorstep.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-blue-600 text-white" id="footer">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-3xl font-bold mb-4">Launching Soon in Bangalore!</h3>
+            <p class="text-xl opacity-90 mb-8">Stay tuned for the best home services platform.</p>
+            <form class="flex flex-col md:flex-row gap-4 justify-center">
+                <input type="email" placeholder="Enter your email" class="px-4 py-3 rounded-lg w-full md:w-64 text-gray-700">
+                <button type="submit" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all">
+                    Notify Me
+                </button>
+            </form>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Chat Button -->
+    <a href="https://wa.me/916362414118" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all">
+        <i class="bi bi-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- Floating Instagram Button -->
+    <a href="https://www.instagram.com/woostaa.bengaluru" target="_blank" class="fixed bottom-24 right-6 bg-pink-600 text-white p-4 rounded-full shadow-lg hover:bg-pink-700 transition-all">
+        <i class="bi bi-instagram text-3xl"></i>
+    </a>
+</body>
+</html>
