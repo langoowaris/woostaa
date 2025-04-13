@@ -7,7 +7,7 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <style>utyc
+    <style>
         * {
             font-family: 'Montserrat', sans-serif;
             scroll-behavior: smooth;
@@ -18,6 +18,10 @@
             background-size: cover;
             background-position: center;
             height: 100vh;
+        }
+  
+        .service-inactive {
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -36,9 +40,14 @@
                 <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
                     Find reliable maids, cooks, drivers, and more trusted home services at your doorstep.
                 </p>
-                <a href="#services" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
-                    Our Services
-                </a>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <a href="#services" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                        Our Services
+                    </a>
+                    <a href="https://wa.me/916362414118" target="_blank" class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all flex items-center justify-center">
+                        <i class="bi bi-whatsapp text-xl mr-2"></i> Book on WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -47,87 +56,131 @@
     <section class="py-20 px-6 bg-white" id="services">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl md:text-5xl font-bold text-center text-blue-600 mb-12">Our Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Currently Available</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- Currently Available Services -->
+                
                 <!-- Maid Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-active">
                     <i class="bi bi-house-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Maids</h3>
                     <p class="text-gray-600">Home cleaning and housekeeping services.</p>
+                    <a href="https://wa.me/916362414118?text=I'm%20interested%20in%20Maid%20services" class="mt-4 inline-block text-blue-600 font-medium hover:underline">
+                        Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
 
                 <!-- Cook Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-active">
                     <i class="bi bi-cup-hot-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Cooks</h3>
                     <p class="text-gray-600">Expert chefs for daily or event-based cooking.</p>
+                    <a href="https://wa.me/916362414118?text=I'm%20interested%20in%20Cook%20services" class="mt-4 inline-block text-blue-600 font-medium hover:underline">
+                        Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
 
                 <!-- Driver Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-active">
                     <i class="bi bi-car-front-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Drivers</h3>
                     <p class="text-gray-600">Professional drivers for short or long trips.</p>
+                    <a href="https://wa.me/916362414118?text=I'm%20interested%20in%20Driver%20services" class="mt-4 inline-block text-blue-600 font-medium hover:underline">
+                        Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
 
                 <!-- Car Washer Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-active">
                     <i class="bi bi-truck text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Car Washers</h3>
                     <p class="text-gray-600">On-demand car cleaning services.</p>
+                    <a href="https://wa.me/916362414118?text=I'm%20interested%20in%20Car%20Washing%20services" class="mt-4 inline-block text-blue-600 font-medium hover:underline">
+                        Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
-
+                
+                <!-- Deep Clean Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-active">
+                    <i class="bi bi-droplet-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Deep Clean</h3>
+                    <p class="text-gray-600">Deep cleaning services for your home.</p>
+                    <a href="https://wa.me/916362414118?text=I'm%20interested%20in%20Deep%20Cleaning%20services" class="mt-4 inline-block text-blue-600 font-medium hover:underline">
+                        Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <!-- Pest Control Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-active">
+                    <i class="bi bi-bug-fill text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Pest Control</h3>
+                    <p class="text-gray-600">Effective solutions for pest problems.</p>
+                    <a href="https://wa.me/916362414118?text=I'm%20interested%20in%20Pest%20Control%20services" class="mt-4 inline-block text-blue-600 font-medium hover:underline">
+                        Book Now <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-semibold text-gray-500 mb-6">Coming Soon</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Coming Soon Services - Faded -->
+                
                 <!-- Tutor Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
                     <i class="bi bi-book-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Tutors</h3>
-                    <p class="text-gray-600">Qualified tutors for various subjects.</p>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
 
                 <!-- Massager Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
                     <i class="bi bi-heart-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Massagers</h3>
-                    <p class="text-gray-600">Professional massage therapists.</p>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
 
                 <!-- Helper Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
                     <i class="bi bi-people-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Helpers</h3>
-                    <p class="text-gray-600">General assistance for household tasks.</p>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
 
                 <!-- Plumber Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
                     <i class="bi bi-tools text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Plumbers</h3>
-                    <p class="text-gray-600">Skilled workers for plumbing issues.</p>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
 
                 <!-- Carpenter Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
                     <i class="bi bi-hammer text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Carpenters</h3>
-                    <p class="text-gray-600">Woodwork and furniture repair services.</p>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
 
                 <!-- Electrician Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
                     <i class="bi bi-lightning-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Electricians</h3>
-                    <p class="text-gray-600">Electrical repairs and installations.</p>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
 
                 <!-- Barber (Home Salon) Service -->
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
                     <i class="bi bi-scissors text-5xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Barbers (Home Salon)</h3>
-                    <p class="text-gray-600">Professional haircuts and grooming at your doorstep.</p>
+                    <h3 class="text-xl font-semibold mb-2">Barbers</h3>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
-                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform">
-                    <i class="bi  bi-key-fill text-5xl text-blue-500 mb-4"></i>
+                
+                <!-- Key Smith Service -->
+                <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center hover:-translate-y-2 transition-transform service-inactive">
+                    <i class="bi bi-key-fill text-5xl text-blue-500 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Key Smith</h3>
-                    <p class="text-gray-600">Duplicate key maker (Also break seals)</p>
+                    <p class="text-gray-600">Coming soon</p>
                 </div>
             </div>
         </div>
@@ -136,12 +189,12 @@
     <!-- Footer -->
     <footer class="py-12 px-6 bg-blue-600 text-white" id="footer">
         <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-3xl font-bold mb-4">Launching Soon in Bangalore!</h3>
-            <p class="text-xl opacity-90 mb-8">Stay tuned for the best home services platform.</p>
+            <h3 class="text-3xl font-bold mb-4">Contact Us</h3>
+            <p class="text-xl opacity-90 mb-8">Call or WhatsApp: +91 6362414118</p>
             <form class="flex flex-col md:flex-row gap-4 justify-center" action="mailto:woostabangalore@gmail.com" method="post">
                 <input type="email" placeholder="Enter your email" class="px-4 py-3 rounded-lg w-full md:w-64 text-gray-700">
                 <button type="submit" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all">
-                    Notify Me
+                    Mail Us
                 </button>
             </form>
         </div>
