@@ -23,6 +23,109 @@
         .service-inactive {
             opacity: 0.5;
         }
+        
+        /* Chatbot Styles */
+        .chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            transform: scale(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+        
+        .chat-container.show {
+            transform: scale(1);
+        }
+        
+        .chat-header {
+            background-color: #2563eb;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .user-message {
+            background-color: #e9f3ff;
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+        }
+        
+        .bot-message {
+            background-color: #f3f4f6;
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+        
+        .chat-input-area {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .send-button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Floating chat button pulse animation */
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
     </style>
 </head>
 <body class="bg-white">
@@ -47,6 +150,9 @@
                     <a href="https://wa.me/916362414118" target="_blank" class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all flex items-center justify-center">
                         <i class="bi bi-whatsapp text-xl mr-2"></i> Book on WhatsApp
                     </a>
+                    <button id="chatbot-btn" class="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all flex items-center justify-center">
+                        <i class="bi bi-chat-dots-fill text-xl mr-2"></i> Chat with Us
+                    </button>
                 </div>
             </div>
         </div>
@@ -209,92 +315,141 @@
     <a href="https://www.instagram.com/woostaa.bengaluru" target="_blank" class="fixed bottom-24 right-6 bg-pink-600 text-white p-4 rounded-full shadow-lg hover:bg-pink-700 transition-all">
         <i class="bi bi-instagram text-3xl"></i>
     </a>
-<!-- Floating Chatbot Button -->
-<div id="chatbot-button" class="fixed bottom-42 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition-all cursor-pointer flex items-center">
-    <i class="bi bi-chat-dots-fill text-3xl mr-2"></i>
-    <span class="chatbot-text font-medium">Ask anything</span>
-</div>
-
-<!-- Chatbot Iframe Container -->
-<div id="chatbot-container" class="fixed bottom-24 right-6 bg-white rounded-lg shadow-xl z-50 hidden">
-    <div class="flex justify-between items-center bg-blue-500 text-white p-3 rounded-t-lg">
-        <h4 class="font-semibold">WOOSTAA Assistant</h4>
-        <button id="close-chatbot" class="text-white hover:text-gray-200">
-            <i class="bi bi-x-lg"></i>
-        </button>
+    
+    <!-- Floating Chatbot Button -->
+    <button id="chatbot-floating-btn" class="fixed bottom-42 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all pulse-animation">
+        <i class="bi bi-chat-dots-fill text-3xl"></i>
+    </button>
+    
+    <!-- Chatbot Container -->
+    <div id="chat-container" class="chat-container">
+        <div class="chat-header">
+            <span>WOOSTAA Chat Support</span>
+            <button id="close-chat" class="text-white">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message bot-message">
+                Hey! How can I help you with WOOSTAA? Do you want to know anything about WOOSTAA?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type your message...">
+            <button id="send-message" class="send-button">
+                <i class="bi bi-send-fill"></i>
+            </button>
+        </div>
     </div>
-    <iframe src="https://woosta-bot.onrender.com" width="320" height="450" frameborder="0" class="rounded-b-lg"></iframe>
-</div>
-
-<!-- Add this script before the closing body tag -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const chatbotButton = document.getElementById('chatbot-button');
-        const chatbotContainer = document.getElementById('chatbot-container');
-        const closeButton = document.getElementById('close-chatbot');
-        
-        // Toggle chatbot visibility
-        chatbotButton.addEventListener('click', function() {
-            chatbotContainer.classList.toggle('hidden');
-            // Change button text when chatbot is open
-            const chatbotText = chatbotButton.querySelector('.chatbot-text');
-            if (!chatbotContainer.classList.contains('hidden')) {
-                chatbotText.textContent = 'Close chat';
-                chatbotButton.classList.add('bg-red-500', 'hover:bg-red-600');
-                chatbotButton.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-            } else {
-                chatbotText.textContent = 'Ask anything';
-                chatbotButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
-                chatbotButton.classList.remove('bg-red-500', 'hover:bg-red-600');
+    
+    <script>
+        // Chatbot functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chat-container');
+            const chatMessages = document.getElementById('chat-messages');
+            const chatInput = document.getElementById('chat-input');
+            const sendButton = document.getElementById('send-message');
+            const floatingChatBtn = document.getElementById('chatbot-floating-btn');
+            const chatbotBtn = document.getElementById('chatbot-btn');
+            const closeChat = document.getElementById('close-chat');
+            
+            // Function to toggle chat window
+            function toggleChat() {
+                chatContainer.classList.toggle('show');
+                if (chatContainer.classList.contains('show')) {
+                    chatInput.focus();
+                    floatingChatBtn.classList.remove('pulse-animation');
+                }
             }
+            
+            // Event listeners for opening/closing chat
+            floatingChatBtn.addEventListener('click', toggleChat);
+            chatbotBtn.addEventListener('click', toggleChat);
+            closeChat.addEventListener('click', toggleChat);
+            
+            // Function to add a user message
+            function addUserMessage(message) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'user-message');
+                messageElement.textContent = message;
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to add a bot message
+            function addBotMessage(message) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'bot-message');
+                messageElement.textContent = message;
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Show loading indicator
+            function showLoading() {
+                const loadingElement = document.createElement('div');
+                loadingElement.classList.add('message', 'bot-message');
+                loadingElement.id = 'loading-message';
+                loadingElement.textContent = 'Typing...';
+                chatMessages.appendChild(loadingElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Remove loading indicator
+            function hideLoading() {
+                const loadingElement = document.getElementById('loading-message');
+                if (loadingElement) {
+                    loadingElement.remove();
+                }
+            }
+            
+            // Function to handle sending message
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message !== '') {
+                    // Add user message to chat
+                    addUserMessage(message);
+                    
+                    // Clear input
+                    chatInput.value = '';
+                    
+                    // Show loading indicator
+                    showLoading();
+                    
+                    // Send to server
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: message })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Hide loading indicator
+                        hideLoading();
+                        
+                        // Add response from server
+                        addBotMessage(data.response);
+                    })
+                    .catch(error => {
+                        // Hide loading indicator
+                        hideLoading();
+                        
+                        console.error('Error:', error);
+                        addBotMessage("Sorry, there was an error processing your request. Please try again later.");
+                    });
+                }
+            }
+            
+            // Event listeners for sending message
+            sendButton.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
         });
-        
-        // Close chatbot when X is clicked
-        closeButton.addEventListener('click', function() {
-            chatbotContainer.classList.add('hidden');
-            const chatbotText = chatbotButton.querySelector('.chatbot-text');
-            chatbotText.textContent = 'Ask anything';
-            chatbotButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
-            chatbotButton.classList.remove('bg-red-500', 'hover:bg-red-600');
-        });
-    });
-</script>
-
-<style>
-    /* Additional styles for the chatbot button */
-    #chatbot-button {
-        display: flex;
-        align-items: center;
-        padding-right: 16px;
-        z-index: 49;
-        bottom: 42vh;
-    }
-    
-    #chatbot-button .chatbot-text {
-        display: none;
-    }
-    
-    /* Show text on hover or when active */
-    #chatbot-button:hover .chatbot-text {
-        display: inline-block;
-        margin-left: 8px;
-    }
-    
-    /* Responsive adjustments */
-    @media (min-width: 768px) {
-        #chatbot-container {
-            width: 350px;
-            height: 520px;
-        }
-    }
-    
-    @media (max-width: 767px) {
-        #chatbot-container {
-            width: 300px;
-            height: 450px;
-            right: 10px;
-        }
-    }
-</style>
+    </script>
 </body>
 </html>
