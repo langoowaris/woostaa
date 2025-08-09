@@ -3,7 +3,7 @@ const https = require('https');
 const http = require('http');
 const express = require('express');
 const app = express();
-
+app.use(express.static(__dirname + '/public'));
 const options = {
   key: fs.readFileSync('/etc/letsencrypt/live/woostaa.com/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/woostaa.com/cert.pem'),
