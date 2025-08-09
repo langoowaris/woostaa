@@ -199,6 +199,8 @@
             box-shadow: 0 4px 15px rgba(26, 78, 255, 0.3);
             position: relative;
             overflow: hidden;
+            text-align: center;
+            display: inline-block;
         }
 
         .nav-cta::before {
@@ -224,9 +226,9 @@
             height: 300px;
         }
 
-        /* Enhanced Hero Section with 3D */
+        /* Enhanced Hero Section with 3D - FIXED GAP */
         .hero {
-            padding: 8rem 2rem 4rem;
+            padding: 10rem 2rem 4rem; /* Increased top padding for more gap */
             background: linear-gradient(135deg, #FFFFFF 0%, #F0F4FF 100%);
             position: relative;
             overflow: hidden;
@@ -286,6 +288,7 @@
             position: relative;
             z-index: 2;
             transform-style: preserve-3d;
+            margin-top: 2rem; /* Added margin for more gap */
         }
 
         .badge {
@@ -368,11 +371,13 @@
             font-weight: 600;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
+            text-align: center;
         }
 
         .primary-button {
@@ -562,6 +567,8 @@
             transition: all 0.3s ease;
             transform: translateZ(10px);
             box-shadow: 0 5px 15px rgba(26, 78, 255, 0.3);
+            text-align: center;
+            display: inline-block;
         }
 
         .service-book-btn:hover {
@@ -569,7 +576,7 @@
             box-shadow: 0 8px 20px rgba(26, 78, 255, 0.4);
         }
 
-        /* Enhanced iPhone Mockup with 3D */
+        /* Enhanced iPhone 15 Mockup with Dynamic Island */
         .app-preview {
             padding: 4rem 2rem;
             background: linear-gradient(135deg, #FFFFFF, #F0F4FF);
@@ -610,37 +617,37 @@
             transform-style: preserve-3d;
         }
 
-        .iphone-camera-notch {
+        /* IPHONE 15 DYNAMIC ISLAND */
+        .dynamic-island {
             position: absolute;
             top: 25px;
             left: 50%;
             transform: translateX(-50%) translateZ(20px);
-            width: 200px;
-            height: 25px;
+            width: 90px;
+            height: 30px;
             background: #000;
-            border-radius: 15px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        .iphone-camera {
-            width: 12px;
-            height: 12px;
-            background: #333;
-            border-radius: 50%;
-            border: 2px solid #222;
-        }
-
-        .iphone-speaker {
+        .dynamic-island::before {
+            content: '';
             position: absolute;
-            top: 32px;
-            left: 50%;
-            transform: translateX(-50%) translateZ(21px);
-            width: 60px;
-            height: 5px;
-            background: #333;
-            border-radius: 3px;
+            width: 10px;
+            height: 10px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            right: 12px;
+            box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Remove old notch styles */
+        .iphone-camera-notch,
+        .iphone-speaker {
+            display: none;
         }
 
         .iphone-home-indicator {
@@ -667,11 +674,19 @@
         .status-bar {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 8px 20px;
             background: white;
             font-size: 14px;
             font-weight: 600;
             color: #333;
+            margin-top: 15px; /* Space for Dynamic Island */
+        }
+
+        .status-indicators {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .app-screen {
@@ -740,6 +755,7 @@
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .quick-action-btn:hover {
@@ -821,6 +837,7 @@
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .book-btn:hover {
@@ -828,7 +845,7 @@
             box-shadow: 0 5px 15px rgba(26, 78, 255, 0.3);
         }
 
-        /* IMPROVED How It Works Section */
+        /* IMPROVED How It Works Section - CLICKABLE STEPS */
         .how-it-works {
             padding: 4rem 2rem;
             background: white;
@@ -866,11 +883,22 @@
             transform: scale(0.85);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            border: 2px solid rgba(26, 78, 255, 0.2);
+            border-radius: 20px;
+            background: linear-gradient(135deg, #FFFFFF, #F8F9FF);
+            cursor: pointer; /* Make clickable */
+        }
+
+        .step:hover {
+            opacity: 0.8;
+            transform: scale(0.9);
         }
 
         .step.active {
             opacity: 1;
             transform: scale(1);
+            border-color: var(--primary-blue);
+            box-shadow: 0 10px 30px rgba(26, 78, 255, 0.15);
         }
 
         .step-number {
@@ -950,6 +978,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .step-btn:hover:not(:disabled) {
@@ -967,7 +996,7 @@
             color: var(--text-secondary);
         }
 
-        /* Why Choose Section with 3D Features */
+        /* Why Choose Section with FIXED ICON ALIGNMENT */
         .why-choose {
             padding: 4rem 2rem;
             background: var(--bg-light);
@@ -989,7 +1018,7 @@
             padding: 2rem;
             border-radius: 20px;
             display: flex;
-            align-items: start;
+            align-items: flex-start; /* Changed from start to flex-start */
             gap: 1.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1005,6 +1034,8 @@
         .feature-icon {
             width: 60px;
             height: 60px;
+            min-width: 60px; /* Prevent shrinking */
+            min-height: 60px; /* Prevent shrinking */
             background: linear-gradient(135deg, rgba(26, 78, 255, 0.1), rgba(26, 78, 255, 0.2));
             border-radius: 15px;
             display: flex;
@@ -1015,6 +1046,7 @@
             transition: transform 0.3s ease;
         }
 
+        /* Fixed animation - only on hover, not iterative */
         .feature:hover .feature-icon {
             transform: translateZ(40px) rotate(360deg);
         }
@@ -1027,6 +1059,7 @@
 
         .feature-content {
             transform: translateZ(20px);
+            flex: 1; /* Take remaining space */
         }
 
         .feature-content h3 {
@@ -1043,34 +1076,35 @@
 
         /* Enhanced Testimonials with 3D Carousel */
         .testimonials {
-            padding: 4rem 0;
+            padding: 4rem 2rem;
             background: white;
             position: relative;
             overflow: hidden;
         }
 
         .testimonials-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
         }
 
         .testimonials-slider {
             position: relative;
             margin-top: 3rem;
-            perspective: 2000px;
         }
 
         .testimonials-wrapper {
             overflow: hidden;
             padding: 2rem 0;
+            max-width: 100%;
+            margin: 0 auto;
         }
 
         .testimonials-track {
             display: flex;
-            gap: 3rem;
+            gap: 2rem;
             transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform-style: preserve-3d;
+            align-items: center;
+            padding: 0 calc(50% - 175px);
         }
 
         .testimonial {
@@ -1080,13 +1114,12 @@
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-            transform: rotateY(0deg) scale(0.85);
-            opacity: 0.5;
+            transform: scale(0.9);
+            opacity: 0.7;
         }
 
         .testimonial.active {
-            transform: rotateY(0deg) scale(1) translateZ(50px);
+            transform: scale(1);
             opacity: 1;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
@@ -1188,20 +1221,6 @@
         .testimonial-dot.active {
             background: var(--primary-blue);
             transform: scale(1.5);
-        }
-
-        .auto-play-indicator {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: var(--primary-blue);
-            transition: width 4s linear;
-        }
-
-        .testimonial-dot.active .auto-play-indicator {
-            width: 100%;
         }
 
         /* FAQ Section with 3D Accordion */
@@ -1337,6 +1356,7 @@
             transition: all 0.3s ease;
             font-size: 1rem;
             transform-style: preserve-3d;
+            text-align: center;
         }
 
         .app-button:hover {
@@ -1346,7 +1366,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* Enhanced Footer with 3D Links */
+        /* Enhanced Footer with 3D Links - FIXED UNDERLINE SIZE */
         footer {
             padding: 4rem 2rem 2rem;
             background: var(--text-primary);
@@ -1370,14 +1390,15 @@
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
+            padding-bottom: 10px;
         }
 
         .footer-section h3::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
-            width: 50px;
+            width: 100%;
             height: 3px;
             background: var(--primary-blue);
             border-radius: 2px;
@@ -1526,13 +1547,13 @@
             50% { transform: translateY(-5px); }
         }
 
-        /* Chatbot Modal with 3D */
+        /* Chatbot Modal with 3D - FIXED HEIGHT */
         .chatbot-modal {
             position: fixed;
             bottom: 100px;
             left: 30px;
             width: 380px;
-            max-height: 600px;
+            height: 600px; /* Fixed height instead of max-height */
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -1540,6 +1561,8 @@
             animation: slideUp 0.3s ease-out;
             transform-style: preserve-3d;
             transform: perspective(1000px) rotateY(-5deg);
+            display: flex;
+            flex-direction: column;
         }
 
         @keyframes slideUp {
@@ -1559,6 +1582,7 @@
             flex-direction: column;
             overflow: hidden;
             border-radius: 20px;
+            background: white;
         }
 
         .chatbot-header {
@@ -1628,11 +1652,33 @@
         .chatbot-messages {
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 1rem;
             background: #F8F9FA;
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            min-height: 0; /* Important for flex child scrolling */
+            max-height: calc(100% - 120px); /* Account for header and input */
+        }
+
+        /* Custom scrollbar for chatbot messages */
+        .chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .message {
@@ -1664,6 +1710,8 @@
             position: relative;
             transform-style: preserve-3d;
             transform: translateZ(5px);
+            word-wrap: break-word;
+            word-break: break-word;
         }
 
         .message.bot .message-bubble {
@@ -1694,6 +1742,7 @@
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-top: 0.5rem;
+            max-width: 100%;
         }
 
         .quick-reply {
@@ -1725,6 +1774,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             transform: translateZ(5px);
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .service-option-simple:hover {
@@ -1799,6 +1850,8 @@
             display: flex;
             gap: 0.5rem;
             align-items: center;
+            flex-shrink: 0; /* Prevent shrinking */
+            min-height: 60px;
         }
 
         .chatbot-input input {
@@ -1853,19 +1906,37 @@
             }
 
             .logo-icon,
-            .logo-image {
-                width: 40px;
-                height: 40px;
-            }
+    .loader-logo-img {
+    width: auto;
+    height: 220px;
+    max-width: 400px;
+    margin-bottom: 2rem;
+    transform: translateZ(50px);
+    animation: float3d 2s ease-in-out infinite;
+    filter: drop-shadow(0 10px 30px rgba(26, 78, 255, 0.3));
+}
+/* Navigation Logo Image - Update existing .logo-image class */
+.logo-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(26, 78, 255, 0.3);
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    object-fit: contain;
+    background: white;
+    padding: 8px;
+}
 
             .nav-cta {
                 padding: 0.6rem 1.5rem;
                 font-size: 0.9rem;
             }
 
-            /* Hero Section */
+            /* Hero Section - REDUCED TOP PADDING */
             .hero {
-                padding: 6rem 1rem 3rem;
+                padding: 5rem 1rem 3rem; /* Reduced from 6rem */
                 min-height: auto;
             }
 
@@ -1894,7 +1965,7 @@
                 font-size: 0.95rem;
             }
 
-            /* Progress Stats */
+            /* Progress Stats - Fixed to 2 per row */
             .progress-stats {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
@@ -1912,14 +1983,28 @@
                 font-size: 0.95rem;
             }
 
-            /* Services Grid */
+            /* Services Grid - Fixed to 2 per row */
             .services-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 0 0.5rem;
             }
 
             .service-card {
-                padding: 2rem;
+                padding: 1.5rem;
+            }
+
+            .service-icon {
+                font-size: 2.5rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.125rem;
+            }
+
+            .service-book-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.875rem;
             }
 
             /* iPhone Mockup */
@@ -1928,14 +2013,16 @@
                 margin: -50px auto;
             }
 
-            /* How It Works - FIXED */
+            /* How It Works - IMPROVED MOBILE DESIGN */
             .steps-wrapper {
                 margin: 2rem 0;
             }
 
+            /* All steps shown vertically on mobile */
             .steps-track {
                 flex-direction: column;
                 gap: 1rem;
+                padding: 0;
             }
 
             .step {
@@ -1944,17 +2031,26 @@
                 padding: 1.5rem;
                 opacity: 1;
                 transform: scale(1);
+                margin-bottom: 1rem;
+                border: 2px solid rgba(26, 78, 255, 0.2);
             }
 
+            .step:last-child {
+                margin-bottom: 0;
+            }
+
+            /* Active step highlighted differently on mobile */
             .step.active {
                 background: linear-gradient(135deg, #F0F4FF, #FFFFFF);
-                box-shadow: 0 10px 30px rgba(26, 78, 255, 0.15);
+                box-shadow: 0 5px 20px rgba(26, 78, 255, 0.2);
+                border-color: var(--primary-blue);
             }
 
             .step-number {
                 width: 60px;
                 height: 60px;
                 font-size: 1.5rem;
+                margin-bottom: 1rem;
             }
 
             .step h3 {
@@ -1981,13 +2077,49 @@
                 padding: 1.5rem;
             }
 
-            /* Testimonials */
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+                min-height: 50px;
+            }
+
+            /* Testimonials - IMPROVED MOBILE DESIGN */
+            .testimonials-wrapper {
+                margin: 0;
+                padding: 1rem 0;
+            }
+
             .testimonials-track {
-                gap: 1rem;
+                /* Stack testimonials vertically on mobile */
+                flex-direction: column;
+                padding: 0;
+                gap: 1.5rem;
+                transform: none !important;
             }
 
             .testimonial {
-                flex: 0 0 280px;
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 100%;
+                padding: 1.5rem;
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            /* Hide inactive testimonials on mobile */
+            .testimonial:not(.active) {
+                display: none;
+            }
+
+            .testimonial-nav {
+                gap: 1rem;
+            }
+
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
 
             /* FAQ */
@@ -2023,6 +2155,11 @@
                 gap: 2rem;
             }
 
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
             .social-links {
                 justify-content: center;
             }
@@ -2054,7 +2191,8 @@
                 left: 20px;
                 right: 20px;
                 bottom: 80px;
-                max-height: 80vh;
+                height: 500px; /* Fixed height for mobile */
+                max-height: 70vh; /* Ensure it doesn't exceed viewport */
             }
 
             /* Section Headers */
@@ -2159,10 +2297,8 @@
     <!-- Loading Screen -->
     <div class="loader" id="loader">
         <div class="loader-content">
-            <div class="loader-logo">Woostaa</div>
-            <div class="loader-progress">
-                <div class="loader-bar"></div>
-            </div>
+        <img src="Blue.svg" alt="Woostaa Logo" class="loader-logo-img">
+           
         </div>
     </div>
 
@@ -2172,34 +2308,29 @@
             <a href="#" class="logo">
                 <!-- Use either logo-image for actual logo or logo-icon for letter -->
                 <!-- <img src="your-logo-url.png" alt="Woostaa Logo" class="logo-image"> -->
-                <div class="logo-icon">W</div>
-                <div class="logo-text">Woostaa</div>
-            </a>
+                 <img src="PrimaryBlueshape.svg" alt="Woostaa" class="logo-image">
+              
             <a href="#services" class="nav-cta">Book Now</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Added Gap -->
     <section class="hero">
         <div class="floating-shapes">
             <div class="shape-3d shape-sphere"></div>
             <div class="shape-3d shape-cube"></div>
         </div>
+        
         <div class="hero-content">
-           
             <h1>Professional Home Services</h1>
             <h2>Expert Help at Your Doorstep in Minutes</h2>
             <p>From deep cleaning to cooking services, connect with verified professionals for all your home needs. Quality service, transparent pricing, instant booking.</p>
             
             <div class="hero-buttons">
                 <a href="#services" class="primary-button">
-                    <svg class="button-icon" viewBox="0 0 24 24" fill="currentColor">
-                       
-                    </svg>
                     Book Service Now
                 </a>
                 <a href="#how-it-works" class="secondary-button">
-
                     See How It Works
                 </a>
             </div>
@@ -2261,7 +2392,7 @@
             </div>
             <div class="service-card">
                 <div class="service-icon">
-                    <i class="bi bi-truck"></i>
+                   <img src="car-wash.svg" alt="Car Wash" style="width: 3.5rem; height: 3.5rem;">
                 </div>
                 <h3>Car Washers</h3>
                 <button class="service-book-btn" onclick="openWhatsAppBooking('Car Washing Services')">Book Now</button>
@@ -2283,7 +2414,7 @@
         </div>
     </section>
 
-    <!-- App Preview Section -->
+    <!-- App Preview Section with iPhone 15 -->
     <section class="app-preview" id="app-preview">
         <div class="section-header">
             <h2>EXPERIENCE OUR APP</h2>
@@ -2292,23 +2423,28 @@
         <div class="app-preview-container">
             <div class="iphone-container">
                 <div class="iphone-mockup">
-                    <div class="iphone-camera-notch">
-                        <div class="iphone-camera"></div>
-                    </div>
-                    <div class="iphone-speaker"></div>
+                    <!-- iPhone 15 Dynamic Island -->
+                    <div class="dynamic-island"></div>
                     <div class="iphone-home-indicator"></div>
                     
                     <div class="iphone-screen">
                         <div class="status-bar">
-                            <div class="status-time">9:41</div>
-                            <div class="status-indicators">📶 🔋</div>
+                            <div class="status-time" id="iphone-time">9:41</div>
+                            <div class="status-indicators">
+                                
+                                <svg width="25" height="12" viewBox="0 0 25 12" style="vertical-align: middle;">
+                                    <rect x="0" y="2" width="20" height="8" rx="2" fill="none" stroke="#333" stroke-width="1"/>
+                                    <rect x="21" y="5" width="2" height="2" rx="0.5" fill="#333"/>
+                                    <rect x="2" y="3.5" width="15" height="5" rx="1" fill="#333"/>
+                                </svg>
+                            </div>
                         </div>
                         
                         <div class="app-screen">
                             <div class="app-header">
                                 <div class="app-title-section">
                                     <div class="app-logo-container">
-                                        <div class="app-icon">W</div>
+                                        <img src="PrimaryBlueshape.svg" alt="Woostaa" class="logo-image">
                                         <div>
                                             <h1 class="app-name">Woostaa</h1>
                                             <p class="app-tagline">Professional services in minutes</p>
@@ -2316,8 +2452,8 @@
                                     </div>
                                 </div>
                                 <div class="quick-actions">
-                                    <button class="quick-action-btn">🚀 Book Now</button>
-                                    <button class="quick-action-btn">📞 Call Helper</button>
+                                    <button class="quick-action-btn">Book Now</button>
+                                    <button class="quick-action-btn">Call Helper</button>
                                 </div>
                             </div>
                             
@@ -2331,7 +2467,7 @@
                                             <p class="service-description">Home cleaning and housekeeping</p>
                                             <div class="service-meta">
                                                 <span class="service-time">⏱️ Hourly</span>
-                                                <span class="service-price">From ₹200</span>
+                                                <!-- <span class="service-price">From ₹200</span> -->
                                             </div>
                                         </div>
                                         <button class="book-btn">Book</button>
@@ -2344,7 +2480,7 @@
                                             <p class="service-description">Expert chefs for daily cooking</p>
                                             <div class="service-meta">
                                                 <span class="service-time">⏱️ Daily</span>
-                                                <span class="service-price">From ₹300</span>
+                                                <!-- <span class="service-price">From ₹300</span> -->
                                             </div>
                                         </div>
                                         <button class="book-btn">Book</button>
@@ -2357,7 +2493,7 @@
                                             <p class="service-description">Professional drivers</p>
                                             <div class="service-meta">
                                                 <span class="service-time">⏱️ Per trip</span>
-                                                <span class="service-price">From ₹400</span>
+                                                <!-- <span class="service-price">From ₹400</span> -->
                                             </div>
                                         </div>
                                         <button class="book-btn">Book</button>
@@ -2370,7 +2506,7 @@
                                             <p class="service-description">On-demand car cleaning</p>
                                             <div class="service-meta">
                                                 <span class="service-time">⏱️ 30-45 min</span>
-                                                <span class="service-price">From ₹250</span>
+                                                <!-- <span class="service-price">From ₹250</span> -->
                                             </div>
                                         </div>
                                         <button class="book-btn">Book</button>
@@ -2383,7 +2519,7 @@
                                             <p class="service-description">Complete deep house cleaning</p>
                                             <div class="service-meta">
                                                 <span class="service-time">⏱️ 3-4 hours</span>
-                                                <span class="service-price">From ₹800</span>
+                                                <!-- <span class="service-price">From ₹800</span> -->
                                             </div>
                                         </div>
                                         <button class="book-btn">Book</button>
@@ -2397,7 +2533,7 @@
         </div>
     </section>
 
-    <!-- IMPROVED How It Works -->
+    <!-- IMPROVED How It Works with Clickable Steps -->
     <section class="how-it-works" id="how-it-works">
         <div class="section-header">
             <h2>HOW WOOSTAA WORKS</h2>
@@ -2438,7 +2574,7 @@
         </div>
     </section>
 
-    <!-- Why Choose Section -->
+    <!-- Why Choose Section with Fixed Icons -->
     <section class="why-choose">
         <div class="section-header">
             <h2>WHY CHOOSE WOOSTAA</h2>
@@ -2557,7 +2693,7 @@
                             </div>
                         </div>
                         
-                        <div class="testimonial" data-index="2">
+                        <div class="testimonial active" data-index="2">
                             <div class="testimonial-content">
                                 <p>"Excellent maid service in Whitefield. The professional was well-trained, trustworthy, and maintained high standards of cleanliness. Very satisfied with Woostaa."</p>
                                 <div class="testimonial-footer">
@@ -2589,7 +2725,7 @@
                             </div>
                         </div>
                         
-                        <div class="testimonial active" data-index="4">
+                        <div class="testimonial" data-index="4">
                             <div class="testimonial-content">
                                 <p>"Amazing pest control service! They completely eliminated the ant problem in my apartment. Professional, clean, and effective treatment with great follow-up."</p>
                                 <div class="testimonial-footer">
@@ -2613,21 +2749,11 @@
                     </button>
                     
                     <div class="testimonial-dots" id="testimonialDots">
-                        <div class="testimonial-dot" data-index="0">
-                            <div class="auto-play-indicator"></div>
-                        </div>
-                        <div class="testimonial-dot" data-index="1">
-                            <div class="auto-play-indicator"></div>
-                        </div>
-                        <div class="testimonial-dot" data-index="2">
-                            <div class="auto-play-indicator"></div>
-                        </div>
-                        <div class="testimonial-dot" data-index="3">
-                            <div class="auto-play-indicator"></div>
-                        </div>
-                        <div class="testimonial-dot active" data-index="4">
-                            <div class="auto-play-indicator"></div>
-                        </div>
+                        <div class="testimonial-dot" data-index="0"></div>
+                        <div class="testimonial-dot" data-index="1"></div>
+                        <div class="testimonial-dot active" data-index="2"></div>
+                        <div class="testimonial-dot" data-index="3"></div>
+                        <div class="testimonial-dot" data-index="4"></div>
                     </div>
                     
                     <button class="nav-arrow" id="nextTestimonial" aria-label="Next testimonial">
@@ -2746,9 +2872,12 @@
             </div>
             <div class="footer-section">
                 <h3>Get in Touch</h3>
+                <a href="https://woostaa.com">Woostaa Housing Solutions PVT. LTD.</a>
                 <a href="#" onclick="openEmail()">📧 woostabangalore.com</a>
                 <a href="#" onclick="openWhatsAppGeneral()">📞 +91 6362414118</a>
+                
                 <a href="#">📍 Bangalore, Karnataka</a>
+
                 <a href="#" onclick="openChatbot()">💬 24/7 Live Chat</a>
             </div>
         </div>
@@ -2767,7 +2896,6 @@
         <div class="chatbot-icon">💬</div>
         <div class="notification-badge" id="chatNotification" style="display: none;">1</div>
     </div>
-
     <script>
         // 3D Background Animation
         function init3DBackground() {
@@ -2862,7 +2990,7 @@
         init3DBackground();
 
         // SIMPLE WHATSAPP-STYLE CHATBOT DATA
-        const chatFlows = {
+            const chatFlows = {
             welcome: {
                 message: "Hi! 👋 Welcome to Woostaa! I'm here to help you with professional home services in Bangalore.",
                 options: [
@@ -2875,12 +3003,12 @@
             services: {
                 message: "We offer these professional home services:",
                 services: [
-                    { emoji: "🏠", name: "Maid Services", price: "starts ₹149/hour", action: "book_maid" },
-                    { emoji: "👨‍🍳", name: "Cook Services", price: "starts ₹299/day", action: "book_cook" },
-                    { emoji: "🚗", name: "Driver Services", price: "starts ₹399/trip", action: "book_driver" },
-                    { emoji: "🚿", name: "Car Washing", price: "starts ₹249/wash", action: "book_car" },
-                    { emoji: "🧽", name: "Deep Cleaning", price: "starts ₹800/session", action: "book_deep" },
-                    { emoji: "🐛", name: "Pest Control", price: "starts ₹499/treatment", action: "book_pest" }
+                    { emoji: "🏠", name: "Maid Services", price: "starts ₹249/hour onwards", action: "book_maid" },
+                    { emoji: "👨‍🍳", name: "Cook Services", price: "starts ₹299/hour onwards", action: "book_cook" },
+                    { emoji: "🚗", name: "Driver Services", price: "starts ₹499 onwards", action: "book_driver" },
+                    { emoji: "🚿", name: "Car Washing", price: "starts ₹249/wash onwards", action: "book_car" },
+                    { emoji: "🧽", name: "Deep Cleaning", price: "starts ₹699/session onwards", action: "book_deep" },
+                    { emoji: "🐛", name: "Pest Control", price: "starts ₹699/treatment onwards", action: "book_pest" }
                 ],
                 options: [
                     { text: "💰 View Pricing", next: "pricing" },
@@ -2891,12 +3019,12 @@
             pricing: {
                 message: "Our transparent pricing (no hidden costs):",
                 pricing: [
-                    "🏠 Maid Services: starts  ₹149-400/hour",
-                    "👨‍🍳 Cook Services: starts ₹299-600/hour", 
-                    "🚗 Driver Services: starts ₹399-800/trip",
-                    "🚿 Car Washing:starts ₹249-500/wash",
-                    "🧽 Deep Cleaning:starts ₹800 (depends on site)",
-                    "🐛 Pest Control:starts ₹500 (depends on site)"
+                    "🏠 Maid Services: starts  ₹249/hour onwards",
+                    "👨‍🍳 Cook Services: starts ₹299/hour onwards", 
+                    "🚗 Driver Services: starts ₹399/trip onwards",
+                    "🚿 Car Washing:starts ₹249/wash onwards",
+                    "🧽 Deep Cleaning:starts ₹699 (depends on site)",
+                    "🐛 Pest Control:starts ₹699 (depends on site)"
                 ],
                 note: "Final price depends on service duration and requirements. All services include verified professionals with quality guarantee.",
                 options: [
@@ -2944,6 +3072,22 @@
 
         let currentChatState = 'welcome';
         let isTyping = false;
+
+        // Update iPhone time display
+        function updateiPhoneTime() {
+            const timeElement = document.getElementById('iphone-time');
+            if (timeElement) {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const formattedTime = `${hours}:${minutes}`;
+                timeElement.textContent = formattedTime;
+            }
+        }
+
+        // Update time immediately and then every minute
+        updateiPhoneTime();
+        setInterval(updateiPhoneTime, 60000);
 
         // Enhanced Loading Animation
         window.addEventListener('load', () => {
@@ -3050,7 +3194,7 @@
             });
         }
 
-        // IMPROVED Steps Slider
+        // IMPROVED Steps Slider with Clickable Steps
         let currentStepIndex = 0;
         const totalSteps = 3;
         const stepsTrack = document.getElementById('stepsTrack');
@@ -3058,9 +3202,10 @@
         const nextBtn = document.getElementById('nextBtn');
         const currentStepSpan = document.getElementById('currentStep');
         const stepDots = document.querySelectorAll('.step-dot');
+        const steps = document.querySelectorAll('.step');
 
         // Check if on mobile
-        const isMobile = window.innerWidth <= 768;
+        let isMobile = window.innerWidth <= 768;
 
         function updateStepDisplay() {
             if (!stepsTrack) return;
@@ -3097,6 +3242,14 @@
             });
         }
 
+        // Make steps clickable
+        steps.forEach((step, index) => {
+            step.addEventListener('click', () => {
+                currentStepIndex = index;
+                updateStepDisplay();
+            });
+        });
+
         if (!isMobile && prevBtn) {
             prevBtn.addEventListener('click', () => {
                 if (currentStepIndex > 0) {
@@ -3122,29 +3275,16 @@
             });
         });
 
-        // Auto-advance steps (desktop only)
-        let stepInterval;
-        if (!isMobile) {
-            stepInterval = setInterval(() => {
-                if (currentStepIndex < totalSteps - 1) {
-                    currentStepIndex++;
-                } else {
-                    currentStepIndex = 0;
-                }
-                updateStepDisplay();
-            }, 5000);
-        }
+        // REMOVED AUTO-ADVANCE FOR STEPS
 
-        // ENHANCED TESTIMONIALS FUNCTIONALITY with 3D Carousel
-        let currentTestimonialIndex = 0;
+        // ENHANCED TESTIMONIALS FUNCTIONALITY - REMOVED AUTO-SCROLL
+        let currentTestimonialIndex = 2; // Start with the middle testimonial
         const totalTestimonials = 5;
         const testimonialsTrack = document.getElementById('testimonialsTrack');
         const prevTestimonialBtn = document.getElementById('prevTestimonial');
         const nextTestimonialBtn = document.getElementById('nextTestimonial');
         const testimonialDots = document.querySelectorAll('.testimonial-dot');
         const testimonials = document.querySelectorAll('.testimonial');
-        let autoPlayInterval;
-        let isAutoPlaying = true;
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -3152,10 +3292,14 @@
             if (!testimonialsTrack) return;
 
             // Calculate position for centering active testimonial
-            const testimonialWidth = 350 + 48; // testimonial width + margins
+            const testimonialWidth = 350; // testimonial width
+            const gap = 32; // 2rem gap
             const containerWidth = document.querySelector('.testimonials-wrapper').offsetWidth;
-            const centerOffset = (containerWidth - 350) / 2;
-            const translateX = centerOffset - (currentTestimonialIndex * testimonialWidth);
+            const totalTrackWidth = (testimonialWidth + gap) * totalTestimonials - gap;
+            
+            // Calculate offset to center the active testimonial
+            const centerOffset = (containerWidth - testimonialWidth) / 2;
+            const translateX = centerOffset - (currentTestimonialIndex * (testimonialWidth + gap));
 
             if (animate) {
                 testimonialsTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -3165,16 +3309,12 @@
             
             testimonialsTrack.style.transform = `translateX(${translateX}px)`;
 
-            // Update testimonial states with 3D effect
+            // Update testimonial states
             testimonials.forEach((testimonial, index) => {
-                const distance = Math.abs(index - currentTestimonialIndex);
                 if (index === currentTestimonialIndex) {
                     testimonial.classList.add('active');
-                    testimonial.style.transform = 'rotateY(0deg) scale(1) translateZ(50px)';
                 } else {
                     testimonial.classList.remove('active');
-                    const rotation = index < currentTestimonialIndex ? 25 : -25;
-                    testimonial.style.transform = `rotateY(${rotation}deg) scale(0.85) translateZ(0px)`;
                 }
             });
 
@@ -3196,45 +3336,18 @@
             if (index >= 0 && index < totalTestimonials) {
                 currentTestimonialIndex = index;
                 updateTestimonialDisplay(animate);
-                resetAutoPlay();
             }
         }
 
         function nextTestimonial() {
             if (currentTestimonialIndex < totalTestimonials - 1) {
                 goToTestimonial(currentTestimonialIndex + 1);
-            } else {
-                goToTestimonial(0); // Loop back to first
             }
         }
 
         function prevTestimonial() {
             if (currentTestimonialIndex > 0) {
                 goToTestimonial(currentTestimonialIndex - 1);
-            } else {
-                goToTestimonial(totalTestimonials - 1); // Loop to last
-            }
-        }
-
-        function startAutoPlay() {
-            if (isAutoPlaying) {
-                autoPlayInterval = setInterval(() => {
-                    nextTestimonial();
-                }, 4000);
-            }
-        }
-
-        function stopAutoPlay() {
-            if (autoPlayInterval) {
-                clearInterval(autoPlayInterval);
-                autoPlayInterval = null;
-            }
-        }
-
-        function resetAutoPlay() {
-            stopAutoPlay();
-            if (isAutoPlaying) {
-                setTimeout(startAutoPlay, 1000);
             }
         }
 
@@ -3263,7 +3376,6 @@
         if (testimonialsWrapper) {
             testimonialsWrapper.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
-                stopAutoPlay();
             }, { passive: true });
 
             testimonialsWrapper.addEventListener('touchend', (e) => {
@@ -3273,24 +3385,12 @@
 
             testimonialsWrapper.addEventListener('mousedown', (e) => {
                 touchStartX = e.clientX;
-                stopAutoPlay();
                 e.preventDefault();
             });
 
             testimonialsWrapper.addEventListener('mouseup', (e) => {
                 touchEndX = e.clientX;
                 handleSwipe();
-            });
-
-            // Pause autoplay on hover
-            testimonialsWrapper.addEventListener('mouseenter', () => {
-                isAutoPlaying = false;
-                stopAutoPlay();
-            });
-
-            testimonialsWrapper.addEventListener('mouseleave', () => {
-                isAutoPlaying = true;
-                startAutoPlay();
             });
         }
 
@@ -3307,14 +3407,11 @@
                     prevTestimonial();
                 }
             }
-            
-            resetAutoPlay();
         }
 
         // Initialize testimonials
         function initTestimonials() {
             updateTestimonialDisplay(false);
-            startAutoPlay();
         }
 
         // FAQ Accordion with 3D effect
@@ -3804,6 +3901,7 @@ setTimeout(() => {
 document.addEventListener('DOMContentLoaded', () => {
     updateStepDisplay();
     initTestimonials();
+    updateiPhoneTime(); // Update iPhone time immediately
     
     // Add accessibility improvements
     document.querySelectorAll('button, a').forEach(element => {
@@ -3816,7 +3914,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         const newIsMobile = window.innerWidth <= 768;
         if (newIsMobile !== isMobile) {
-            location.reload(); // Reload to reinitialize mobile/desktop specific features
+            isMobile = newIsMobile;
+            updateStepDisplay();
         }
     });
     
@@ -3824,9 +3923,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Memory cleanup
+let timeInterval = setInterval(updateiPhoneTime, 60000);
+
 window.addEventListener('beforeunload', () => {
-    if (stepInterval) clearInterval(stepInterval);
-    if (autoPlayInterval) clearInterval(autoPlayInterval);
+    // Clear the time update interval
+    clearInterval(timeInterval);
 });
     </script>
 </body>
