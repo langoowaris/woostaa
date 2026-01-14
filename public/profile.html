@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile - Woostaa</title>
+    <link rel="icon" type="image/x-icon" href="img/Blue.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .profile-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-hover));
+            padding: 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 600px;
+            transform: perspective(1000px) rotateX(0deg);
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .profile-header h1 {
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-light);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-hover));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .required {
+            color: var(--accent-red-text);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .profile-button {
+            width: 100%;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .profile-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profile-button:disabled {
+            background: var(--disabled-grey);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .skip-button {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-light);
+        }
+
+        .skip-button:hover {
+            background: var(--border-light);
+            color: var(--text-primary);
+        }
+
+        .error-message {
+            background: var(--accent-red-bg);
+            color: var(--accent-red-text);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            background: var(--accent-green-bg);
+            color: var(--accent-green-text);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .user-info {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .user-info h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateX(-20deg) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateX(0deg) translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .apartment-selection select,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .apartment-selection select:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .toggle-btn {
+            background: var(--border-light);
+            color: var(--text-secondary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .toggle-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .custom-apartment {
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+            }
+            
+            .profile-card {
+                padding: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <img src="img/PrimaryBlueshape.svg" alt="Woostaa Logo">
+                <h1>Complete Your Profile</h1>
+                <p>Help us serve you better by completing your profile information</p>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="user-info" id="userInfo" style="display: none;">
+                <h3 id="userName">Loading...</h3>
+                <p id="userEmail">Loading...</p>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <form id="profileForm">
+                <div class="form-section">
+                    <h3 class="section-title">🏠 Address Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="apartmentName">Apartment/Building Name <span class="required">*</span></label>
+                        <div class="apartment-selection">
+                            <select id="apartmentSelect" name="apartmentId" style="margin-bottom: 0.5rem;">
+                                <option value="">Select from registered apartments</option>
+                            </select>
+                            <div class="custom-apartment" style="display: none;">
+                                <input type="text" id="apartmentName" name="apartmentName" 
+                                       placeholder="Enter custom apartment name">
+                            </div>
+                            <button type="button" id="toggleCustom" class="toggle-btn">
+                                Not listed? Enter custom name
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="flatNumber">Flat/House Number <span class="required">*</span></label>
+                            <input type="text" id="flatNumber" name="flatNumber" required 
+                                   placeholder="e.g., 3B, A-101">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="area">Area/Locality <span class="required">*</span></label>
+                            <select id="areaSelect" name="areaSelect" style="margin-bottom: 0.5rem;">
+                                <option value="">Select area</option>
+                            </select>
+                            <input type="text" id="area" name="area" required 
+                                   placeholder="Or enter custom area" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="landmark">Landmark</label>
+                            <input type="text" id="landmark" name="landmark" 
+                                   placeholder="e.g., Near Forum Mall">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode">Pincode <span class="required">*</span></label>
+                            <select id="pincodeSelect" name="pincodeSelect" style="margin-bottom: 0.5rem;">
+                                <option value="">Select pincode</option>
+                            </select>
+                            <input type="text" id="pincode" name="pincode" required 
+                                   placeholder="Or enter custom pincode" pattern="[0-9]{6}" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-title">📞 Contact Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required 
+                               placeholder="e.g., +91 9876543210">
+                        <small style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+                            Required for service booking confirmation and coordination
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emergencyContact">Emergency Contact Number</label>
+                        <input type="tel" id="emergencyContact" name="emergencyContact" 
+                               placeholder="e.g., +91 9876543210">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-title">📝 Additional Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="specialInstructions">Special Instructions for Service Providers</label>
+                        <textarea id="specialInstructions" name="specialInstructions" 
+                                  placeholder="e.g., Ring doorbell twice, pets at home, building entry code, etc."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="profile-button" id="saveBtn">
+                    <span class="btn-text">Save Profile & Continue</span>
+                    <span class="loading" style="display: none;"></span>
+                </button>
+                
+                <button type="button" class="profile-button skip-button" id="skipBtn">
+                    Skip for Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const profileForm = document.getElementById('profileForm');
+        const saveBtn = document.getElementById('saveBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        const btnText = saveBtn.querySelector('.btn-text');
+        const loadingSpinner = saveBtn.querySelector('.loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const progressFill = document.getElementById('progressFill');
+        const userInfo = document.getElementById('userInfo');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+
+        // Apartment selection elements
+        const apartmentSelect = document.getElementById('apartmentSelect');
+        const apartmentNameInput = document.getElementById('apartmentName');
+        const customApartmentDiv = document.querySelector('.custom-apartment');
+        const toggleCustomBtn = document.getElementById('toggleCustom');
+        const areaSelect = document.getElementById('areaSelect');
+        const areaInput = document.getElementById('area');
+        const pincodeSelect = document.getElementById('pincodeSelect');
+        const pincodeInput = document.getElementById('pincode');
+
+        // Check authentication
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            window.location.href = '/login?redirect=profile';
+        }
+
+        // Load user data on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadUserProfile();
+            await loadApartmentData();
+            populateExistingData(); // Populate dropdowns after data is loaded
+            setupApartmentHandlers();
+            updateProgress();
+        });
+
+        // Load existing user profile
+        async function loadUserProfile() {
+            try {
+                const response = await fetch('/api/auth/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const user = await response.json();
+                    
+                    // Update user info display
+                    userName.textContent = user.fullName;
+                    userEmail.textContent = user.email;
+                    userInfo.style.display = 'block';
+
+                    // Fill form with existing data
+                    if (user.profile) {
+                        // Store user profile data for later use
+                        window.userProfileData = user.profile;
+                        
+                        // Fill text inputs immediately
+                        document.getElementById('phone').value = user.phone || '';
+                        document.getElementById('apartmentName').value = user.profile.apartmentName || '';
+                        document.getElementById('flatNumber').value = user.profile.flatNumber || '';
+                        document.getElementById('area').value = user.profile.area || '';
+                        document.getElementById('landmark').value = user.profile.landmark || '';
+                        document.getElementById('pincode').value = user.profile.pincode || '';
+                        document.getElementById('emergencyContact').value = user.profile.emergencyContact || '';
+                        document.getElementById('specialInstructions').value = user.profile.specialInstructions || '';
+                        
+                        console.log('User profile data loaded:', user.profile);
+                    }
+                } else if (response.status === 401) {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userData');
+                    window.location.href = '/login?redirect=profile';
+                } else {
+                    showError('Failed to load user profile');
+                }
+            } catch (error) {
+                console.error('Profile load error:', error);
+                showError('Network error. Please refresh the page.');
+            }
+        }
+
+        // Populate dropdowns with existing user data
+        function populateExistingData() {
+            if (!window.userProfileData) return;
+            
+            const profile = window.userProfileData;
+            console.log('Populating existing data:', profile);
+            
+            // Try to match apartment in dropdown
+            if (profile.apartmentName) {
+                const apartmentOptions = Array.from(apartmentSelect.options);
+                const matchingApartment = apartmentOptions.find(option => 
+                    option.text.toLowerCase().includes(profile.apartmentName.toLowerCase())
+                );
+                
+                if (matchingApartment) {
+                    apartmentSelect.value = matchingApartment.value;
+                    console.log('Found matching apartment:', matchingApartment.text);
+                    
+                    // Trigger change event to populate area and pincode
+                    apartmentSelect.dispatchEvent(new Event('change'));
+                } else {
+                    // Use custom apartment input
+                    console.log('No matching apartment found, using custom input');
+                    toggleCustomBtn.click();
+                    document.getElementById('apartmentName').value = profile.apartmentName;
+                }
+            }
+            
+            // Match area in dropdown
+            if (profile.area) {
+                setTimeout(() => { // Wait a bit for apartment data to load
+                    const areaOptions = Array.from(areaSelect.options);
+                    const matchingArea = areaOptions.find(option => 
+                        option.value.toLowerCase() === profile.area.toLowerCase()
+                    );
+                    
+                    if (matchingArea) {
+                        areaSelect.value = matchingArea.value;
+                        areaInput.style.display = 'none';
+                        console.log('Found matching area:', matchingArea.text);
+                        
+                        // Load pincodes for this area
+                        loadPincodesForArea(profile.area);
+                    } else {
+                        areaSelect.value = '';
+                        areaInput.style.display = 'block';
+                        areaInput.value = profile.area;
+                        console.log('No matching area found, using custom input');
+                    }
+                }, 500);
+            }
+            
+            // Match pincode in dropdown (after area is loaded)
+            if (profile.pincode) {
+                setTimeout(() => {
+                    const pincodeOptions = Array.from(pincodeSelect.options);
+                    const matchingPincode = pincodeOptions.find(option => 
+                        option.value === profile.pincode
+                    );
+                    
+                    if (matchingPincode) {
+                        pincodeSelect.value = matchingPincode.value;
+                        pincodeInput.style.display = 'none';
+                        console.log('Found matching pincode:', matchingPincode.text);
+                    } else {
+                        pincodeSelect.value = '';
+                        pincodeInput.style.display = 'block';
+                        pincodeInput.value = profile.pincode;
+                        console.log('No matching pincode found, using custom input');
+                    }
+                }, 1000);
+            }
+        }
+
+        // Update progress bar based on form completion
+        function updateProgress() {
+            const requiredFields = ['phone', 'apartmentName', 'flatNumber', 'area', 'pincode'];
+            const filledFields = requiredFields.filter(field => {
+                const value = document.getElementById(field).value.trim();
+                return value.length > 0;
+            }).length;
+
+            const progress = (filledFields / requiredFields.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Add event listeners to update progress
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('input', updateProgress);
+        });
+
+        // Handle form submission
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get apartment info - either from selection or custom input
+            const selectedApartmentId = apartmentSelect.value;
+            const customApartmentName = apartmentNameInput.value.trim();
+            const apartmentName = selectedApartmentId ? 
+                apartmentSelect.selectedOptions[0].text.split(' - ')[0] : 
+                customApartmentName;
+
+            const formData = {
+                phone: document.getElementById('phone').value.trim(),
+                apartmentId: selectedApartmentId || null,
+                apartmentName: apartmentName,
+                flatNumber: document.getElementById('flatNumber').value.trim(),
+                area: document.getElementById('area').value.trim(),
+                landmark: document.getElementById('landmark').value.trim(),
+                pincode: document.getElementById('pincode').value.trim(),
+                emergencyContact: document.getElementById('emergencyContact').value.trim(),
+                specialInstructions: document.getElementById('specialInstructions').value.trim()
+            };
+
+            // Validate required fields
+            const requiredFields = {
+                phone: 'Phone Number',
+                apartmentName: 'Apartment/Building Name',
+                flatNumber: 'Flat/House Number',
+                area: 'Area/Locality',
+                pincode: 'Pincode'
+            };
+
+            for (const [field, label] of Object.entries(requiredFields)) {
+                if (!formData[field]) {
+                    showError(`${label} is required`);
+                    document.getElementById(field).focus();
+                    return;
+                }
+            }
+
+            // Validate phone number format
+            if (formData.phone && formData.phone.length < 10) {
+                showError('Please enter a valid phone number (at least 10 digits)');
+                document.getElementById('phone').focus();
+                return;
+            }
+
+            // Validate pincode format
+            if (formData.pincode && !/^[0-9]{6}$/.test(formData.pincode)) {
+                showError('Please enter a valid 6-digit pincode');
+                document.getElementById('pincode').focus();
+                return;
+            }
+
+            setLoading(true);
+            hideMessages();
+
+            try {
+                const response = await fetch('/api/auth/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Update local storage
+                    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+                    userData.isProfileComplete = true;
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    
+                    showSuccess('Profile updated successfully! Redirecting...');
+                    
+                    setTimeout(() => {
+                        // Check for pending service booking
+                        const pendingService = localStorage.getItem('pendingService');
+                        if (pendingService) {
+                            localStorage.removeItem('pendingService');
+                            window.location.href = `/booking?service=${encodeURIComponent(pendingService)}`;
+                        } else {
+                            window.location.href = '/dashboard';
+                        }
+                    }, 1500);
+                } else if (response.status === 401) {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userData');
+                    window.location.href = '/login?redirect=profile';
+                } else {
+                    showError(data.error || 'Failed to update profile');
+                }
+            } catch (error) {
+                console.error('Profile update error:', error);
+                showError('Network error. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Handle skip button
+        skipBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to skip profile completion? You can complete it later, but it will be required before making your first booking.')) {
+                const pendingService = localStorage.getItem('pendingService');
+                if (pendingService) {
+                    alert('Profile completion is required to proceed with booking. Please fill in the required fields.');
+                } else {
+                    window.location.href = '/dashboard';
+                }
+            }
+        });
+
+        function setLoading(isLoading) {
+            if (isLoading) {
+                btnText.style.display = 'none';
+                loadingSpinner.style.display = 'inline-block';
+                saveBtn.disabled = true;
+                skipBtn.disabled = true;
+            } else {
+                btnText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+                saveBtn.disabled = false;
+                skipBtn.disabled = false;
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // Apartment selection functionality
+        async function loadApartmentData() {
+            try {
+                // Load areas
+                const areasResponse = await fetch('/api/apartments/areas/list');
+                if (areasResponse.ok) {
+                    const areas = await areasResponse.json();
+                    areaSelect.innerHTML = '<option value="">Select area</option>';
+                    areas.forEach(area => {
+                        areaSelect.innerHTML += `<option value="${area}">${area}</option>`;
+                    });
+                }
+
+                // Load apartments
+                const apartmentsResponse = await fetch('/api/apartments/available');
+                if (apartmentsResponse.ok) {
+                    const apartments = await apartmentsResponse.json();
+                    apartmentSelect.innerHTML = '<option value="">Select from registered apartments</option>';
+                    apartments.forEach(apt => {
+                        apartmentSelect.innerHTML += `<option value="${apt._id}" data-area="${apt.area}" data-pincode="${apt.pincode}">${apt.name} - ${apt.area}</option>`;
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load apartment data:', error);
+            }
+        }
+
+        function setupApartmentHandlers() {
+            // Toggle between apartment selection and custom input
+            toggleCustomBtn.addEventListener('click', () => {
+                const isCustomVisible = customApartmentDiv.style.display !== 'none';
+                
+                if (isCustomVisible) {
+                    // Switch back to dropdown
+                    customApartmentDiv.style.display = 'none';
+                    apartmentSelect.style.display = 'block';
+                    toggleCustomBtn.textContent = 'Not listed? Enter custom name';
+                    apartmentNameInput.removeAttribute('required');
+                    apartmentSelect.setAttribute('required', 'required');
+                } else {
+                    // Switch to custom input
+                    customApartmentDiv.style.display = 'block';
+                    apartmentSelect.style.display = 'none';
+                    toggleCustomBtn.textContent = 'Select from list instead';
+                    apartmentSelect.removeAttribute('required');
+                    apartmentNameInput.setAttribute('required', 'required');
+                }
+            });
+
+            // Handle apartment selection
+            apartmentSelect.addEventListener('change', (e) => {
+                const selectedOption = e.target.selectedOptions[0];
+                if (selectedOption && selectedOption.value) {
+                    const area = selectedOption.dataset.area;
+                    const pincode = selectedOption.dataset.pincode;
+                    
+                    // Auto-fill area and pincode
+                    if (area) {
+                        areaSelect.value = area;
+                        areaInput.value = area;
+                    }
+                    if (pincode) {
+                        pincodeSelect.value = pincode;
+                        pincodeInput.value = pincode;
+                    }
+                    
+                    // Load pincodes for selected area
+                    loadPincodesForArea(area);
+                }
+            });
+
+            // Handle area selection
+            areaSelect.addEventListener('change', (e) => {
+                const selectedArea = e.target.value;
+                if (selectedArea) {
+                    areaInput.value = selectedArea;
+                    areaInput.style.display = 'none';
+                    loadPincodesForArea(selectedArea);
+                } else {
+                    areaInput.style.display = 'block';
+                    areaInput.value = '';
+                }
+            });
+
+            // Handle pincode selection
+            pincodeSelect.addEventListener('change', (e) => {
+                const selectedPincode = e.target.value;
+                if (selectedPincode) {
+                    pincodeInput.value = selectedPincode;
+                    pincodeInput.style.display = 'none';
+                } else {
+                    pincodeInput.style.display = 'block';
+                    pincodeInput.value = '';
+                }
+            });
+
+            // Show manual input if custom option selected
+            areaInput.addEventListener('input', () => {
+                if (areaInput.value) {
+                    areaSelect.value = '';
+                }
+            });
+
+            pincodeInput.addEventListener('input', () => {
+                if (pincodeInput.value) {
+                    pincodeSelect.value = '';
+                }
+            });
+        }
+
+        async function loadPincodesForArea(area) {
+            try {
+                const response = await fetch(`/api/apartments/pincodes/${encodeURIComponent(area)}`);
+                if (response.ok) {
+                    const pincodes = await response.json();
+                    pincodeSelect.innerHTML = '<option value="">Select pincode</option>';
+                    pincodes.forEach(pincode => {
+                        pincodeSelect.innerHTML += `<option value="${pincode}">${pincode}</option>`;
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load pincodes:', error);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Service - Woostaa</title>
+    <link rel="icon" type="image/x-icon" href="img/Blue.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: var(--bg-light);
+        }
+
+        .booking-container {
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .booking-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .booking-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .booking-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .service-info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .service-details h2 {
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+        }
+
+        .service-details p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .booking-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .pricing-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-option {
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-option:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .pricing-option.selected {
+            border-color: var(--primary-blue);
+            background: rgba(74, 144, 226, 0.05);
+        }
+
+        .pricing-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .option-price {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+        }
+
+        .option-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .total-summary {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            border-top: 2px solid var(--border-light);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .booking-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-secondary {
+            background: var(--border-light);
+            color: var(--text-secondary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 2;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            background: var(--border-light);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: var(--accent-red-bg);
+            color: var(--accent-red-text);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            background: var(--accent-green-bg);
+            color: var(--accent-green-text);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .booking-container {
+                padding: 1rem;
+            }
+
+            .booking-title {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="booking-container">
+        <div class="booking-header">
+            <h1 class="booking-title">Book Your Service</h1>
+            <p class="booking-subtitle">Choose your service options and schedule your appointment</p>
+        </div>
+
+        <div class="booking-content">
+            <div class="service-info-card" id="serviceInfo">
+                <div class="service-header">
+                    <div class="service-icon" id="serviceIcon">
+                        <i class="bi bi-house-fill"></i>
+                    </div>
+                    <div class="service-details">
+                        <h2 id="serviceName">Loading...</h2>
+                        <p id="serviceDescription">Please wait while we load service details.</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="booking-form" id="bookingForm">
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="bi bi-calendar-check"></i>
+                        Service Options
+                    </h3>
+                    <div class="pricing-options" id="pricingOptions">
+                        <div class="loading" style="text-align: center; padding: 2rem;">Loading pricing options...</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="bi bi-calendar-event"></i>
+                        Schedule
+                    </h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="preferredDate">Preferred Date</label>
+                            <input type="date" id="preferredDate" name="preferredDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="preferredTime">Preferred Time</label>
+                            <input type="time" id="preferredTime" name="preferredTime" required>
+                            <small id="timeConstraintMessage"
+                                style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+                                Service must be booked at least 1 hour in advance
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="bi bi-chat-text"></i>
+                        Additional Details
+                    </h3>
+                    <div class="form-group">
+                        <label for="specialRequests">Special Requests or Instructions</label>
+                        <textarea id="specialRequests" name="specialRequests" rows="4"
+                            placeholder="Any specific requirements, preferences, or instructions for the service provider..."></textarea>
+                    </div>
+                </div>
+
+                <div class="total-summary" id="totalSummary" style="display: none;">
+                    <div class="summary-row">
+                        <span>Service:</span>
+                        <span id="summaryService">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Option:</span>
+                        <span id="summaryOption">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Date & Time:</span>
+                        <span id="summaryDateTime">-</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total Amount:</span>
+                        <span id="summaryTotal">₹0</span>
+                    </div>
+                </div>
+
+                <div class="booking-actions">
+                    <button type="button" class="btn-secondary" onclick="goBack()">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </button>
+                    <button type="submit" class="btn-primary" id="bookButton">
+                        <span class="btn-text">Book Service</span>
+                        <span class="loading" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceName = urlParams.get('service');
+        const token = localStorage.getItem('authToken');
+
+        let currentService = null;
+        let selectedPricing = null;
+        let userProfile = null;
+
+        // Check authentication
+        if (!token) {
+            localStorage.setItem('pendingService', serviceName);
+            window.location.href = '/login?redirect=booking';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!serviceName) {
+                showError('No service specified. Please select a service from the homepage.');
+                return;
+            }
+
+            await loadUserProfile();
+            await loadServiceDetails();
+            setupFormHandlers();
+            setMinDate();
+            updateTimeConstraints();
+        });
+
+        async function loadUserProfile() {
+            try {
+                const response = await fetch('/api/auth/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load user profile');
+                }
+
+                userProfile = await response.json();
+                console.log('User profile loaded:', userProfile.profile?.apartmentName);
+
+                // Check if profile is complete before allowing booking
+                if (!isProfileComplete(userProfile)) {
+                    showProfileIncompleteModal();
+                    return;
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                showError('Failed to load user profile. Please try refreshing the page.');
+            }
+        }
+
+        function isProfileComplete(user) {
+            // Check required fields for booking
+            const requiredFields = [
+                { field: user.fullName, name: 'Full Name' },
+                { field: user.phone, name: 'Phone Number' },
+                { field: user.profile?.apartmentName, name: 'Apartment Name' },
+                { field: user.profile?.flatNumber, name: 'Flat Number' },
+                { field: user.profile?.area, name: 'Area' },
+                { field: user.profile?.pincode, name: 'Pincode' }
+            ];
+
+            const missingFields = [];
+
+            requiredFields.forEach((item) => {
+                if (!item.field || item.field.trim() === '') {
+                    missingFields.push(item.name);
+                }
+            });
+
+            // Special check for phone number with detailed logging
+            if (!user.phone || user.phone.trim() === '') {
+                console.warn('❌ BOOKING BLOCKED: Phone number is missing!');
+            }
+
+            console.log('Profile Completeness Check:', {
+                isComplete: missingFields.length === 0,
+                missingFields: missingFields,
+                phoneNumber: user.phone ? `Set: ${user.phone}` : '❌ MISSING - BOOKING WILL BE BLOCKED',
+                userProfile: {
+                    fullName: user.fullName ? 'Set' : 'Missing',
+                    phone: user.phone ? 'Set' : '❌ MISSING',
+                    apartmentName: user.profile?.apartmentName ? 'Set' : 'Missing',
+                    flatNumber: user.profile?.flatNumber ? 'Set' : 'Missing',
+                    area: user.profile?.area ? 'Set' : 'Missing',
+                    pincode: user.profile?.pincode ? 'Set' : 'Missing'
+                }
+            });
+
+            return missingFields.length === 0;
+        }
+
+        function showProfileIncompleteModal() {
+            const user = userProfile;
+            const requiredFields = [
+                { field: user.fullName, name: 'Full Name' },
+                { field: user.phone, name: 'Phone Number' },
+                { field: user.profile?.apartmentName, name: 'Apartment Name' },
+                { field: user.profile?.flatNumber, name: 'Flat Number' },
+                { field: user.profile?.area, name: 'Area' },
+                { field: user.profile?.pincode, name: 'Pincode' }
+            ];
+
+            const missingFields = requiredFields.filter(item => !item.field || item.field.trim() === '');
+            const missingFieldNames = missingFields.map(item => item.name);
+
+            // Check if phone number is specifically missing
+            const isPhoneMissing = !user.phone || user.phone.trim() === '';
+
+            console.log('📱 Phone Number Check:', {
+                phoneNumber: user.phone,
+                isPhoneMissing: isPhoneMissing,
+                allMissingFields: missingFieldNames
+            });
+
+            const modal = document.createElement('div');
+            modal.className = 'profile-incomplete-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                padding: 1rem;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 20px;
+                    padding: 2rem;
+                    max-width: 500px;
+                    width: 100%;
+                    text-align: center;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                ">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                    <h2 style="color: var(--primary-blue); margin-bottom: 1rem;">Complete Your Profile</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        To book services, please complete your profile first. ${isPhoneMissing ? '<strong style="color: var(--accent-red-text);">Phone number is especially important for service confirmation and coordination.</strong>' : ''} The following information is required:
+                    </p>
+                    <div style="background: var(--bg-light); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; text-align: left;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-red-text);">Missing Information:</h4>
+                        <ul style="margin: 0; padding-left: 1.5rem; color: var(--text-primary);">
+                            ${missingFieldNames.map(field => `<li>${field}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                        This information helps us provide better service and connect you with the right professionals.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button onclick="goToProfile()" style="
+                            background: var(--primary-blue);
+                            color: white;
+                            border: none;
+                            padding: 1rem 2rem;
+                            border-radius: 10px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            flex: 1;
+                        ">Complete Profile</button>
+                        <button onclick="goBack()" style="
+                            background: var(--border-light);
+                            color: var(--text-secondary);
+                            border: none;
+                            padding: 1rem 2rem;
+                            border-radius: 10px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            flex: 1;
+                        ">Go Back</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function goToProfile() {
+            // Store the current service for later
+            localStorage.setItem('pendingService', serviceName);
+            window.location.href = '/profile?redirect=booking';
+        }
+
+        async function loadServiceDetails() {
+            try {
+                // Map service names to API types
+                const serviceTypeMap = {
+                    'maid': 'maid',
+                    'maid services': 'maid',
+                    'cook': 'cook',
+                    'cook services': 'cook',
+                    'driver': 'driver',
+                    'driver services': 'driver',
+                    'carwash': 'carwash',
+                    'car wash': 'carwash',
+                    'car wash services': 'carwash',
+                    'car washing': 'carwash',
+                    'car washing services': 'carwash',
+                    'deepcleaning': 'deepcleaning',
+                    'deep cleaning': 'deepcleaning',
+                    'deep cleaning services': 'deepcleaning',
+                    'pestcontrol': 'pestcontrol',
+                    'pest control': 'pestcontrol',
+                    'pest control services': 'pestcontrol'
+                };
+
+                const serviceType = serviceTypeMap[serviceName.toLowerCase()];
+                if (!serviceType) {
+                    showError(`Invalid service type: ${serviceName}. Please select a valid service.`);
+                    return;
+                }
+
+                console.log(`Loading service: ${serviceName} → API type: ${serviceType}`);
+
+                // Use the new detailed services API
+                const response = await fetch(`/api/services/detailed/${serviceType}`);
+                if (!response.ok) throw new Error('Failed to load service details');
+
+                currentService = await response.json();
+                if (!currentService) {
+                    showError('Service not found. Please select a valid service.');
+                    return;
+                }
+
+                // Update service info
+                document.getElementById('serviceName').textContent = currentService.name || `${serviceName.charAt(0).toUpperCase() + serviceName.slice(1)} Services`;
+                document.getElementById('serviceDescription').textContent = currentService.description || `Professional ${serviceName} services for your home`;
+
+                // Set service icon
+                const serviceIcon = document.getElementById('serviceIcon');
+                const iconMap = {
+                    'maid': 'bi-house-fill',
+                    'cook': 'bi-cup-hot-fill',
+                    'driver': 'bi-car-front-fill',
+                    'deepcleaning': 'bi-droplet-fill',
+                    'carwash': 'bi-car-front',
+                    'pestcontrol': 'bi-bug-fill'
+                };
+                serviceIcon.innerHTML = `<i class="bi ${iconMap[serviceType] || 'bi-gear-fill'}"></i>`;
+
+                // Load hourly pricing options
+                loadHourlyPricingOptions();
+
+            } catch (error) {
+                console.error('Error loading service details:', error);
+                showError('Failed to load service details. Please try again.');
+            }
+        }
+
+        function loadHourlyPricingOptions() {
+            const pricingContainer = document.getElementById('pricingOptions');
+            const allPricingItems = currentService.pricingMatrix || currentService.pricing || [];
+
+            if (allPricingItems.length === 0) {
+                pricingContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No pricing options available for this service.</div>';
+                return;
+            }
+
+            // Filter pricing items based on user's apartment
+            const userApartmentName = userProfile?.profile?.apartmentName;
+            console.log('User apartment name:', userApartmentName);
+            console.log('All pricing items:', allPricingItems.map(item => ({
+                displayName: item.displayName,
+                apartmentNames: item.apartmentNames,
+                apartmentIds: item.apartmentIds
+            })));
+
+            // First, find if there's apartment-specific pricing for this user
+            let apartmentSpecificItems = [];
+            let genericItems = []; // Items for all apartments (no apartmentIds)
+
+            allPricingItems.forEach(item => {
+                const hasApartmentRestriction = item.apartmentIds && item.apartmentIds.length > 0;
+
+                if (!hasApartmentRestriction) {
+                    // This is a generic "all apartments" item
+                    genericItems.push(item);
+                } else if (userApartmentName && item.apartmentNames && item.apartmentNames.length > 0) {
+                    // Check if this matches user's apartment
+                    const matchesUserApartment = item.apartmentNames.some(apartmentName =>
+                        apartmentName.toLowerCase().includes(userApartmentName.toLowerCase()) ||
+                        userApartmentName.toLowerCase().includes(apartmentName.toLowerCase())
+                    );
+                    if (matchesUserApartment) {
+                        apartmentSpecificItems.push(item);
+                    }
+                }
+            });
+
+            // If user has apartment-specific pricing, use ONLY that
+            // Otherwise, use generic pricing
+            let availablePricingItems;
+            if (apartmentSpecificItems.length > 0) {
+                console.log(`Found ${apartmentSpecificItems.length} apartment-specific pricing options for ${userApartmentName}`);
+                availablePricingItems = apartmentSpecificItems;
+            } else {
+                console.log(`No apartment-specific pricing found, using ${genericItems.length} generic options`);
+                availablePricingItems = genericItems;
+            }
+
+            // If user has no apartment set, show all items
+            if (!userApartmentName) {
+                console.log('User has no apartment, showing all items');
+                availablePricingItems = allPricingItems;
+            }
+
+            console.log(`Filtered ${availablePricingItems.length} pricing options from ${allPricingItems.length} total`);
+
+            const pricingItems = availablePricingItems;
+
+            // Add apartment-specific notice
+            let apartmentNotice = '';
+            if (userApartmentName) {
+                const hasApartmentSpecificPricing = availablePricingItems.some(item =>
+                    item.apartmentIds && item.apartmentIds.length > 0
+                );
+                const hasFilteredOut = availablePricingItems.length < allPricingItems.length;
+
+                if (hasFilteredOut) {
+                    apartmentNotice = `
+                        <div style="background: #e8f4f8; border: 1px solid #4a90e2; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; text-align: center;">
+                            <i class="bi bi-info-circle" style="color: #4a90e2; margin-right: 0.5rem;"></i>
+                            <span style="color: #2c5282; font-weight: 500;">
+                                Showing ${availablePricingItems.length} pricing options available for ${userApartmentName}
+                            </span>
+                        </div>
+                    `;
+                } else if (hasApartmentSpecificPricing) {
+                    apartmentNotice = `
+                        <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; text-align: center;">
+                            <i class="bi bi-house-fill" style="color: #0ea5e9; margin-right: 0.5rem;"></i>
+                            <span style="color: #0c4a6e; font-weight: 500;">
+                                Special pricing available for ${userApartmentName}
+                            </span>
+                        </div>
+                    `;
+                }
+            }
+
+            // Create service options with hour selection
+            pricingContainer.innerHTML = apartmentNotice + pricingItems.map((item, index) => {
+                const hasHourlyRate = item.additionalRate > 0;
+
+                // Get operating hours from service settings only
+                const serviceStartTime = currentService.settings?.operatingHours?.startTime || '06:00';
+                const serviceEndTime = currentService.settings?.operatingHours?.endTime || '19:00';
+
+                console.log(`Service Hours for ${item.displayName}:`, {
+                    serviceHours: currentService.settings?.operatingHours ?
+                        `${currentService.settings.operatingHours.startTime} - ${currentService.settings.operatingHours.endTime}` : 'Not set (using fallback)',
+                    appliedHours: `${serviceStartTime} - ${serviceEndTime}`
+                });
+
+                const startTime12 = convertTo12Hour(serviceStartTime);
+                const endTime12 = convertTo12Hour(serviceEndTime);
+
+                const displayTitle = item.displayName ||
+                    (item.carType ? `${formatOptionName(item.carType)} - ${formatOptionName(item.packageType || '')}` : 'Service Option');
+                const displayPrice = item.price !== undefined ? item.price : (item.baseRate !== undefined ? item.baseRate : (item.basePrice || 0));
+
+                return `
+                    <div class="pricing-option" onclick="selectServiceOption(${index}, event)" data-service-index="${index}">
+                        <input type="radio" name="pricing" value="${index}">
+                        <div class="option-header">
+                            <span class="option-title">${displayTitle}</span>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <button type="button" onclick="viewServiceDetails(${index})" 
+                                        style="background: none; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 0.3rem 0.8rem; border-radius: 5px; font-size: 0.85rem; cursor: pointer;">
+                                    View Details
+                                </button>
+                                <span class="option-price" id="price-display-${index}">₹${displayPrice}</span>
+                            </div>
+                        </div>
+                        <div class="option-description">
+                            ${item.description || ''}
+                            ${hasHourlyRate ? `
+                                <div style="margin-top: 1rem;">
+                                    <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Select Hours:</label>
+                                    <div style="display: flex; align-items: center; gap: 1rem; justify-content: center;">
+                                        <button type="button" onclick="decreaseHours(${index})" 
+                                                style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-blue); background: white; color: var(--primary-blue); font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                            −
+                                        </button>
+                                        <span id="hours-display-${index}" style="font-weight: 600; min-width: 80px; text-align: center; font-size: 1.1rem;">${item.minHours} hrs</span>
+                                        <button type="button" onclick="increaseHours(${index})" 
+                                                style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-blue); background: var(--primary-blue); color: white; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                            +
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="hours-${index}" value="${item.minHours}">
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; text-align: center;">
+                                        Base: ₹${item.baseRate} (${item.minHours}h) + ₹${item.additionalRate}/additional hour<br>
+                                        <strong>Service Hours:</strong> ${startTime12} - ${endTime12}
+                                    </div>
+                                </div>
+                            ` : `
+                                <div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                                    Fixed price service<br>
+                                    <strong>Service Hours:</strong> ${startTime12} - ${endTime12}
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function formatOptionName(key) {
+            return key.split(/(?=[A-Z])/).map(word =>
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+        }
+
+        function getOptionDescription(key, serviceName) {
+            const descriptions = {
+                '1bhk': 'Perfect for 1 bedroom apartments',
+                '2bhk': 'Ideal for 2 bedroom apartments',
+                '3bhk': 'Suitable for 3 bedroom apartments',
+                '4bhk': 'Comprehensive service for large homes',
+                'basic': 'Essential service package',
+                'premium': 'Complete service with extras',
+                'hourly': 'Charged per hour',
+                'weekly': 'Weekly service package',
+                'monthly': 'Monthly subscription',
+                'perTrip': 'Per trip pricing'
+            };
+            return descriptions[key] || `${serviceName} - ${formatOptionName(key)}`;
+        }
+
+        function selectServiceOption(index, event) {
+            // Prevent if clicking on View Details button
+            if (event && event.target.textContent === 'View Details') {
+                return;
+            }
+
+            console.log('Selecting service option:', index);
+
+            // Remove previous selection
+            document.querySelectorAll('.pricing-option').forEach(opt => opt.classList.remove('selected'));
+
+            // Add selection to clicked option
+            const currentOption = document.querySelector(`[data-service-index="${index}"]`);
+            if (currentOption) {
+                currentOption.classList.add('selected');
+                const radioInput = currentOption.querySelector('input[type="radio"]');
+                if (radioInput) {
+                    radioInput.checked = true;
+                }
+            }
+
+            // Find the pricing item from the filtered list
+            const allPricingItems = currentService.pricingMatrix || currentService.pricing || [];
+            const userApartmentName = userProfile?.profile?.apartmentName;
+
+            // Use same filtering logic as loadHourlyPricingOptions
+            let apartmentSpecificItems = [];
+            let genericItems = [];
+            allPricingItems.forEach(item => {
+                const hasApartmentRestriction = item.apartmentIds && item.apartmentIds.length > 0;
+                if (!hasApartmentRestriction) {
+                    genericItems.push(item);
+                } else if (userApartmentName && item.apartmentNames && item.apartmentNames.length > 0) {
+                    const matchesUserApartment = item.apartmentNames.some(apartmentName =>
+                        apartmentName.toLowerCase().includes(userApartmentName.toLowerCase()) ||
+                        userApartmentName.toLowerCase().includes(apartmentName.toLowerCase())
+                    );
+                    if (matchesUserApartment) {
+                        apartmentSpecificItems.push(item);
+                    }
+                }
+            });
+
+            let availablePricingItems;
+            if (apartmentSpecificItems.length > 0) {
+                availablePricingItems = apartmentSpecificItems;
+            } else if (!userApartmentName) {
+                availablePricingItems = allPricingItems;
+            } else {
+                availablePricingItems = genericItems;
+            }
+
+            const pricingItem = availablePricingItems[index];
+            if (!pricingItem) {
+                console.error('Pricing item not found at index:', index);
+                return;
+            }
+
+            const hours = parseFloat(document.getElementById(`hours-${index}`)?.value || pricingItem.minHours);
+            const price = calculateHourlyPrice(pricingItem, hours);
+
+            selectedPricing = {
+                index,
+                option: pricingItem.displayName,
+                price,
+                hours,
+                baseRate: pricingItem.baseRate,
+                additionalRate: pricingItem.additionalRate || 0,
+                pricingItem
+            };
+
+            console.log('Selected pricing updated:', selectedPricing);
+            updateTimeConstraints();
+            updateSummary();
+        }
+
+        function increaseHours(index) {
+            const allPricingItems = currentService.pricingMatrix || currentService.pricing || [];
+            const pricingItem = allPricingItems[index];
+            const hoursInput = document.getElementById(`hours-${index}`);
+            const currentHours = parseFloat(hoursInput.value);
+            const maxHours = 8; // Max 8 hours
+
+            if (currentHours < maxHours) {
+                const newHours = currentHours + 0.5;
+                hoursInput.value = newHours;
+                updateHourlyPrice(index);
+            }
+        }
+
+        function decreaseHours(index) {
+            const allPricingItems = currentService.pricingMatrix || currentService.pricing || [];
+            const pricingItem = allPricingItems[index];
+            const hoursInput = document.getElementById(`hours-${index}`);
+            const currentHours = parseFloat(hoursInput.value);
+            const minHours = pricingItem.minHours || 1;
+
+            if (currentHours > minHours) {
+                const newHours = currentHours - 0.5;
+                hoursInput.value = newHours;
+                updateHourlyPrice(index);
+            }
+        }
+
+        function updateHourlyPrice(index) {
+            const allPricingItems = currentService.pricingMatrix || currentService.pricing || [];
+            const pricingItem = allPricingItems[index];
+            const hoursInput = document.getElementById(`hours-${index}`);
+            const hoursDisplay = document.getElementById(`hours-display-${index}`);
+            const priceDisplay = document.getElementById(`price-display-${index}`);
+
+            const hours = parseFloat(hoursInput.value);
+            const price = calculateHourlyPrice(pricingItem, hours);
+
+            hoursDisplay.textContent = `${hours} hrs`;
+            priceDisplay.textContent = `₹${price}`;
+
+            // Update selected pricing if this option is selected
+            const isSelected = document.querySelector(`[data-service-index="${index}"]`).classList.contains('selected');
+            if (isSelected) {
+                selectedPricing = {
+                    index,
+                    option: pricingItem.displayName,
+                    price,
+                    hours,
+                    baseRate: pricingItem.baseRate,
+                    additionalRate: pricingItem.additionalRate || 0,
+                    pricingItem
+                };
+                updateTimeConstraints();
+                updateSummary();
+            }
+        }
+
+        function calculateHourlyPrice(pricingItem, hours) {
+            if (!pricingItem.additionalRate) {
+                return pricingItem.baseRate; // Fixed price service
+            }
+
+            const minHours = pricingItem.minHours || 1;
+            if (hours <= minHours) {
+                return pricingItem.baseRate;
+            }
+
+            const extraHours = hours - minHours;
+            return pricingItem.baseRate + (extraHours * pricingItem.additionalRate);
+        }
+
+        function updateSummary() {
+            if (!selectedPricing) return;
+
+            const summaryContainer = document.getElementById('totalSummary');
+            const preferredDate = document.getElementById('preferredDate').value;
+            const preferredTime = document.getElementById('preferredTime').value;
+
+            let summaryHTML = `
+                <h3 style="margin-bottom: 1rem; color: var(--primary-blue);">Booking Summary</h3>
+                <div class="summary-row">
+                    <span>Service:</span>
+                    <span>${selectedPricing.option}</span>
+                </div>
+            `;
+
+            // Show hourly breakdown if applicable
+            if (selectedPricing.additionalRate > 0) {
+                const minHours = selectedPricing.pricingItem.minHours || 1;
+                const extraHours = Math.max(0, selectedPricing.hours - minHours);
+                summaryHTML += `
+                    <div class="summary-row">
+                        <span>Base Rate (${minHours} hour${minHours > 1 ? 's' : ''}):</span>
+                        <span>₹${selectedPricing.baseRate}</span>
+                    </div>
+                `;
+                if (extraHours > 0) {
+                    summaryHTML += `
+                        <div class="summary-row">
+                            <span>Additional Hours (${extraHours} × ₹${selectedPricing.additionalRate}):</span>
+                            <span>₹${extraHours * selectedPricing.additionalRate}</span>
+                        </div>
+                    `;
+                }
+                summaryHTML += `
+                    <div class="summary-row">
+                        <span>Total Hours:</span>
+                        <span>${selectedPricing.hours} hours</span>
+                    </div>
+                `;
+            }
+
+            // Date and time
+            let dateTimeText = 'Not selected';
+            if (preferredDate && preferredTime) {
+                const date = new Date(preferredDate).toLocaleDateString('en-IN');
+                const time = convertTo12Hour(preferredTime);
+                dateTimeText = `${date} at ${time}`;
+            }
+
+            summaryHTML += `
+                <div class="summary-row">
+                    <span>Date & Time:</span>
+                    <span>${dateTimeText}</span>
+                </div>
+                <div class="summary-total">
+                    <span>Total Amount:</span>
+                    <span>₹${selectedPricing.price}</span>
+                </div>
+            `;
+
+            summaryContainer.innerHTML = summaryHTML;
+            summaryContainer.style.display = 'block';
+        }
+
+        function convertTo12Hour(time24) {
+            const [hours, minutes] = time24.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12;
+            return `${hour12}:${minutes} ${ampm}`;
+        }
+
+        function setupFormHandlers() {
+            document.getElementById('preferredDate').addEventListener('change', () => {
+                updateTimeConstraints();
+                updateSummary();
+            });
+            document.getElementById('preferredTime').addEventListener('change', updateSummary);
+
+            document.getElementById('bookingForm').addEventListener('submit', handleBooking);
+        }
+
+        function setMinDate() {
+            const today = new Date();
+            document.getElementById('preferredDate').min = today.toISOString().split('T')[0];
+        }
+
+        function updateTimeConstraints() {
+            const preferredDate = document.getElementById('preferredDate').value;
+            const timeInput = document.getElementById('preferredTime');
+            const messageElement = document.getElementById('timeConstraintMessage');
+
+            if (!preferredDate) {
+                messageElement.textContent = 'Please select a date first';
+                return;
+            }
+
+            // Get operating hours from service settings only
+            let startTime = '06:00';
+            let endTime = '19:00';
+
+            if (currentService?.settings?.operatingHours) {
+                startTime = currentService.settings.operatingHours.startTime || '06:00';
+                endTime = currentService.settings.operatingHours.endTime || '19:00';
+
+                console.log('🕐 Time Constraints Update:', {
+                    selectedPricing: selectedPricing?.option || 'None selected',
+                    serviceHours: `${currentService.settings.operatingHours.startTime} - ${currentService.settings.operatingHours.endTime}`,
+                    appliedHours: `${startTime} - ${endTime}`,
+                    selectedDate: preferredDate
+                });
+            } else {
+                console.log('🕐 Time Constraints Update (Fallback):', {
+                    appliedHours: `${startTime} - ${endTime}`,
+                    selectedDate: preferredDate,
+                    note: 'Using fallback hours - no service operating hours in API'
+                });
+            }
+
+            const selectedDate = new Date(preferredDate);
+            const today = new Date();
+            const isToday = selectedDate.toDateString() === today.toDateString();
+
+            let minTime = startTime;
+            let maxTime = endTime;
+            let messageText = `Service available: ${convertTo12Hour(startTime)} - ${convertTo12Hour(endTime)}`;
+
+            if (isToday) {
+                // If booking for today, also consider the 1-hour advance requirement
+                const oneHourFromNow = new Date(today.getTime() + 60 * 60 * 1000);
+                const earliestBookingTime = oneHourFromNow.toTimeString().split(':').slice(0, 2).join(':');
+
+                // Use whichever is later: start time or 1 hour from now
+                if (earliestBookingTime > startTime) {
+                    minTime = earliestBookingTime;
+
+                    if (earliestBookingTime > endTime) {
+                        messageText = `Service ends at ${convertTo12Hour(endTime)}. Please book for tomorrow or a later date.`;
+                        messageElement.style.color = 'var(--accent-red-text)';
+                    } else {
+                        messageText = `Available today: ${convertTo12Hour(minTime)} - ${convertTo12Hour(endTime)} (1hr advance required)`;
+                        messageElement.style.color = 'var(--text-secondary)';
+                    }
+                } else {
+                    messageText = `Available today: ${convertTo12Hour(startTime)} - ${convertTo12Hour(endTime)} (1hr advance required)`;
+                    messageElement.style.color = 'var(--text-secondary)';
+                }
+            } else {
+                messageElement.style.color = 'var(--text-secondary)';
+            }
+
+            // Set HTML5 time input constraints
+            timeInput.min = minTime;
+            timeInput.max = maxTime;
+
+            messageElement.textContent = messageText;
+        }
+
+        function validateBookingTime(preferredDate, preferredTime) {
+            if (!preferredDate || !preferredTime) {
+                showError('Please select both date and time for your booking.');
+                return false;
+            }
+
+            // Get operating hours from service settings only
+            let startTime = '06:00';
+            let endTime = '19:00';
+
+            if (currentService?.settings?.operatingHours) {
+                startTime = currentService.settings.operatingHours.startTime || '06:00';
+                endTime = currentService.settings.operatingHours.endTime || '19:00';
+
+                console.log('⏰ Booking Validation:', {
+                    selectedPricing: selectedPricing?.option || 'None selected',
+                    serviceHours: `${currentService.settings.operatingHours.startTime} - ${currentService.settings.operatingHours.endTime}`,
+                    appliedHours: `${startTime} - ${endTime}`,
+                    bookingTime: preferredTime
+                });
+            } else {
+                console.log('⏰ Booking Validation (Fallback):', {
+                    appliedHours: `${startTime} - ${endTime}`,
+                    bookingTime: preferredTime,
+                    note: 'Using fallback hours - no service operating hours in API'
+                });
+            }
+
+            // Check if time is within operating hours
+            if (preferredTime < startTime || preferredTime > endTime) {
+                const startTime12 = convertTo12Hour(startTime);
+                const endTime12 = convertTo12Hour(endTime);
+                showError(`Service operating hours are ${startTime12} to ${endTime12}. Please select a time within these hours.`);
+                return false;
+            }
+
+            // Create booking datetime
+            const bookingDateTime = new Date(`${preferredDate}T${preferredTime}`);
+            const now = new Date();
+
+            // Check if booking is at least 1 hour in advance
+            const oneHourFromNow = new Date(now.getTime() + 60 * 60 * 1000);
+
+            if (bookingDateTime <= oneHourFromNow) {
+                const currentTime = now.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                const earliestTime = oneHourFromNow.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Also check if the earliest valid time is within operating hours
+                const earliestTimeOnly = earliestTime.split(':').slice(0, 2).join(':');
+                if (preferredDate === now.toISOString().split('T')[0] && earliestTimeOnly > endTime) {
+                    showError(`Service hours end at ${convertTo12Hour(endTime)}. Please book for tomorrow or a later date.`);
+                } else if (preferredDate === now.toISOString().split('T')[0] && earliestTimeOnly < startTime) {
+                    showError(`Service hours start at ${convertTo12Hour(startTime)}. Please select ${convertTo12Hour(startTime)} or later.`);
+                } else if (preferredDate === now.toISOString().split('T')[0]) {
+                    const validEarliestTime = earliestTimeOnly < startTime ? startTime : earliestTimeOnly;
+                    showError(`Service must be booked at least 1 hour in advance and within service hours (${convertTo12Hour(startTime)} - ${convertTo12Hour(endTime)}). Earliest available time today: ${convertTo12Hour(validEarliestTime)}`);
+                } else {
+                    showError('Service must be booked at least 1 hour in advance.');
+                }
+                return false;
+            }
+
+            return true;
+        }
+
+        async function handleBooking(e) {
+            e.preventDefault();
+
+            // Critical check: Ensure phone number is present before booking
+            if (!userProfile?.phone || userProfile.phone.trim() === '') {
+                console.error('🚫 BOOKING BLOCKED: No phone number found!');
+                showError('Phone number is required for booking. Please update your profile first.');
+
+                // Force redirect to profile page
+                setTimeout(() => {
+                    localStorage.setItem('pendingService', serviceName);
+                    window.location.href = '/profile?redirect=booking&reason=phone';
+                }, 2000);
+                return;
+            }
+
+            console.log('✅ Phone number verified for booking:', userProfile.phone);
+
+            if (!selectedPricing) {
+                showError('Please select a pricing option.');
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const preferredDate = formData.get('preferredDate');
+            const preferredTime = formData.get('preferredTime');
+
+            // Validate booking time - must be at least 1 hour in advance
+            if (!validateBookingTime(preferredDate, preferredTime)) {
+                return; // Error message already shown in validateBookingTime
+            }
+
+            const bookingData = {
+                serviceId: currentService._id,
+                serviceName: currentService.name,
+                pricingOption: selectedPricing.option,
+                totalAmount: selectedPricing.price,
+                preferredDate: preferredDate,
+                preferredTime: preferredTime,
+                specialRequests: formData.get('specialRequests'),
+                duration: selectedPricing.hours ? Math.round(selectedPricing.hours * 60) : 60
+            };
+
+            setLoading(true);
+
+            try {
+                const response = await fetch('/api/orders/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Booking confirmed! Redirecting to your dashboard...');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 2000);
+                } else {
+                    showError(data.error || 'Failed to create booking.');
+                }
+            } catch (error) {
+                console.error('Booking error:', error);
+                showError('Network error. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        function setLoading(loading) {
+            const button = document.getElementById('bookButton');
+            const btnText = button.querySelector('.btn-text');
+            const loadingSpinner = button.querySelector('.loading');
+
+            if (loading) {
+                button.disabled = true;
+                btnText.style.display = 'none';
+                loadingSpinner.style.display = 'inline-block';
+            } else {
+                button.disabled = false;
+                btnText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+
+            successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function viewServiceDetails(index) {
+            event.stopPropagation(); // Prevent selecting the service option
+
+            // Get the pricing item from the filtered list (same as in selectServiceOption)
+            const allPricingItems = currentService.pricingMatrix || currentService.pricing || [];
+            const userApartmentName = userProfile?.profile?.apartmentName;
+
+            // Use same filtering logic as loadHourlyPricingOptions
+            let apartmentSpecificItems = [];
+            let genericItems = [];
+            allPricingItems.forEach(item => {
+                const hasApartmentRestriction = item.apartmentIds && item.apartmentIds.length > 0;
+                if (!hasApartmentRestriction) {
+                    genericItems.push(item);
+                } else if (userApartmentName && item.apartmentNames && item.apartmentNames.length > 0) {
+                    const matchesUserApartment = item.apartmentNames.some(apartmentName =>
+                        apartmentName.toLowerCase().includes(userApartmentName.toLowerCase()) ||
+                        userApartmentName.toLowerCase().includes(apartmentName.toLowerCase())
+                    );
+                    if (matchesUserApartment) {
+                        apartmentSpecificItems.push(item);
+                    }
+                }
+            });
+
+            let availablePricingItems;
+            if (apartmentSpecificItems.length > 0) {
+                availablePricingItems = apartmentSpecificItems;
+            } else if (!userApartmentName) {
+                availablePricingItems = allPricingItems;
+            } else {
+                availablePricingItems = genericItems;
+            }
+
+            const pricingItem = availablePricingItems[index];
+            if (!pricingItem) {
+                console.error('Pricing item not found at index:', index);
+                return;
+            }
+
+            const hasHourlyRate = pricingItem.additionalRate > 0;
+
+            let apartmentInfo = '';
+            if (pricingItem.apartmentNames && pricingItem.apartmentNames.length > 0) {
+                apartmentInfo = `<strong>Available for:</strong> ${pricingItem.apartmentNames.join(', ')}`;
+            } else {
+                apartmentInfo = `<strong>Available for:</strong> All apartments`;
+            }
+
+            // Keep pricing info minimal - just base rate
+            let pricingInfo = `
+                <div style="margin: 1rem 0;">
+                    <strong>Base Price:</strong> ₹${pricingItem.baseRate}${hasHourlyRate ? ' (hourly service)' : ' (fixed price)'}
+                </div>
+            `;
+
+            const modalContent = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;" onclick="closeServiceDetails()">
+                    <div style="background: white; border-radius: 15px; padding: 2rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;" onclick="event.stopPropagation()">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="margin: 0; color: var(--primary-blue);">${pricingItem.displayName}</h3>
+                            <button onclick="closeServiceDetails()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-secondary);">&times;</button>
+                        </div>
+                        
+                        <div style="margin: 1rem 0;">
+                            <strong>Service Description:</strong><br>
+                            ${currentService.description || 'Professional service for your home'}
+                        </div>
+                        
+                        <div style="margin: 1rem 0;">
+                            <strong>Option Details:</strong><br>
+                            ${pricingItem.description || 'No specific details available for this option'}
+                        </div>
+                        
+                        ${pricingInfo}
+                        
+                        <div style="margin: 1rem 0;">
+                            ${apartmentInfo}
+                        </div>
+                        
+                        ${currentService.serviceIncludes && currentService.serviceIncludes.length > 0 ? `
+                            <div style="margin: 1rem 0;">
+                                <strong>Service Includes:</strong>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                    ${currentService.serviceIncludes.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        
+                        ${currentService.serviceExcludes && currentService.serviceExcludes.length > 0 ? `
+                            <div style="margin: 1rem 0;">
+                                <strong>Service Excludes:</strong>
+                                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                    ${currentService.serviceExcludes.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        
+                        <div style="text-align: center; margin-top: 1.5rem;">
+                            <button onclick="closeServiceDetails()" style="background: var(--primary-blue); color: white; border: none; padding: 0.8rem 2rem; border-radius: 8px; cursor: pointer;">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add modal to page
+            const modalDiv = document.createElement('div');
+            modalDiv.id = 'serviceDetailsModal';
+            modalDiv.innerHTML = modalContent;
+            document.body.appendChild(modalDiv);
+        }
+
+        function closeServiceDetails() {
+            const modal = document.getElementById('serviceDetailsModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function goBack() {
+            if (document.referrer && document.referrer.includes(window.location.hostname)) {
+                window.history.back();
+            } else {
+                window.location.href = '/dashboard';
+            }
+        }
+    </script>
+</body>
+
+</html>
