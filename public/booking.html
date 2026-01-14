@@ -27,6 +27,10 @@
     <style>
         body {
             background: var(--bg-light);
+            /* Hide content until auth check passes */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
         }
 
         .booking-container {
@@ -436,15 +440,19 @@
         const serviceName = urlParams.get('service');
         const token = localStorage.getItem('authToken');
 
-        let currentService = null;
-        let selectedPricing = null;
-        let userProfile = null;
-
-        // Check authentication
+        // Check authentication immediately
         if (!token) {
             localStorage.setItem('pendingService', serviceName);
             window.location.href = '/login?redirect=booking';
+        } else {
+            // Show content if authenticated
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = '1';
         }
+
+        let currentService = null;
+        let selectedPricing = null;
+        let userProfile = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
             if (!serviceName) {

@@ -13,6 +13,10 @@
     <style>
         body {
             background: var(--bg-light);
+            /* Hide content until auth check passes */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
         }
 
         .dashboard-container {
@@ -444,9 +448,13 @@
         const token = localStorage.getItem('authToken');
         const userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
-        // Check authentication
+        // Check authentication immediately
         if (!token) {
             window.location.href = '/login';
+        } else {
+            // Show content if authenticated
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = '1';
         }
 
         document.addEventListener('DOMContentLoaded', async () => {

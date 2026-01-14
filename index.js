@@ -49,9 +49,24 @@ const getUserFromToken = (cookieHeader) => {
 
 app.use(async (req, res, next) => {
     try {
-        // Skip API and static file requests for visit tracking
-        const skipPaths = ['/api/', '/css/', '/js/', '/img/', '/favicon'];
-        if (skipPaths.some(p => req.path.startsWith(p))) {
+        const path = req.path;
+
+        // 1. Skip strictly ignored paths (API, assets, admin routes)
+        const skipPrefixes = ['/api', '/css', '/js', '/img', '/favicon', '/fonts', '/admin', '/dashboard'];
+        if (skipPrefixes.some(p => path.startsWith(p))) {
+            return next();
+        }
+
+        // 2. Skip sensitive/suspicious paths (Bot scanning commonly targets these)
+        const suspiciousPatterns = ['/.env', '/config.', '/.git', '/server-status', '/_profiler', '/telescope', '/phpinfo', '/info.php'];
+        if (suspiciousPatterns.some(p => path.includes(p))) {
+            return next();
+        }
+
+        // 3. Skip static files based on extension (unless it's .html)
+        // We only want to track actual page views
+        const isStaticFile = /\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|map|json|xml|txt)$/i.test(path);
+        if (isStaticFile && !path.endsWith('.html')) {
             return next();
         }
 
