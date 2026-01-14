@@ -3604,11 +3604,14 @@
             const rule = currentPricingData.find(r => r._id === ruleId);
             if (!rule) return;
 
-            // Open the normal modal first to generate HTML
+            // Open the normal modal first to generate HTML with hidden field
             openAddPricingModal(serviceType);
 
-            // Set state
-            editingRuleId = ruleId;
+            // Populate hidden ID
+            const form = document.getElementById('addPricingForm');
+            if (form && form.elements['pricingId']) {
+                form.elements['pricingId'].value = ruleId;
+            }
 
             // Update Title and Button
             document.querySelector('#pricingModal .modal-title').textContent = 'Edit Pricing Rule';
@@ -3706,10 +3709,7 @@
 
         // Reset editing state when opening modal fresh
         const originalOpenAddPricingModal = openAddPricingModal;
-        openAddPricingModal = function (serviceType) {
-            editingRuleId = null;
-            originalOpenAddPricingModal(serviceType);
-        };        // Initialize with default tab
+        // Initialize with default tab
         document.addEventListener('DOMContentLoaded', () => {
             if (document.getElementById('tab-car-wash')) {
                 switchServiceTab('car-wash');
@@ -3917,6 +3917,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="addPricingForm">
+                                <input type="hidden" name="pricingId" value="">
                                 ${formFields}
                                 
                                 <h4 style="margin: 1.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #eee; color: var(--primary-color);">Pricing & Display</h4>
@@ -3996,7 +3997,9 @@
 
         async function addPricingRule(serviceType, formData) {
             const data = Object.fromEntries(formData.entries());
-            // Convert numbers
+            const pricingId = data.pricingId; // Get ID from hidden field
+            delete data.pricingId; // Remove ID from payload body
+
             // Convert numbers
             if (data.price) data.price = Number(data.price);
             if (data.baseRate) data.baseRate = Number(data.baseRate);
@@ -4011,22 +4014,32 @@
             if (data.apartmentId === "") data.apartmentId = null; // Backend expects null or valid ID
 
             try {
-                const response = await makeAdminRequest(`/services/${serviceType}/pricing/add`, {
-                    method: 'POST',
-                    body: JSON.stringify(data)
-                });
+                let response;
+                if (pricingId) {
+                    // Update existing using PUT
+                    response = await makeAdminRequest(`/services/${serviceType}/pricing/${pricingId}`, {
+                        method: 'PUT',
+                        body: JSON.stringify(data)
+                    });
+                } else {
+                    // Create new using POST
+                    response = await makeAdminRequest(`/services/${serviceType}/pricing/add`, {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    });
+                }
 
                 if (response.ok) {
-                    alert('Pricing rule added!');
+                    alert(pricingId ? 'Pricing rule updated!' : 'Pricing rule added!');
                     closeModal();
                     loadPricing(serviceType);
                 } else {
                     const err = await response.json();
-                    alert(err.error || 'Failed to add pricing');
+                    alert(err.error || 'Failed to save pricing');
                 }
             } catch (e) {
                 console.error(e);
-                alert('Failed to add prcing rule');
+                alert('Failed to save pricing rule');
             }
         }
 
