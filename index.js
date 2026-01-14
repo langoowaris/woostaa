@@ -154,38 +154,54 @@ app.use(async (req, res, next) => {
     next();
 });
 
-// Disable all security headers for development
-app.use((req, res, next) => {
-    // Prevent HTTPS upgrade attempts
-    res.setHeader('Strict-Transport-Security', 'max-age=0');
-    res.removeHeader('Upgrade-Insecure-Requests');
-    next();
-});
-
-// Security middleware - Completely disabled for development
+// Security - Helmet (Enabled with CSP)
 app.use(helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://checkout.razorpay.com", "https://apis.google.com"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+            imgSrc: ["'self'", "data:", "https://*"],
+            connectSrc: ["'self'", "https://api.razorpay.com"],
+            frameSrc: ["'self'", "https://api.razorpay.com", "https://checkout.razorpay.com"],
+        },
+    },
     crossOriginEmbedderPolicy: false,
     crossOriginOpenerPolicy: false,
-    crossOriginResourcePolicy: false,
-    originAgentCluster: false,
-    hsts: false, // Disable HTTPS Strict Transport Security
-    noSniff: false,
-    frameguard: false,
-    xssFilter: false
 }));
 
+// CORS Configuration
 app.use(cors({
-    origin: true,
+    origin: true, // In production, replace with specific domain
     credentials: true
 }));
 
-// Rate limiting
-const limiter = rateLimit({
+// Data Sanitization
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
+// Rate limiting - Global
+const globalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 1000 // limit each IP to 100 requests per windowMs
+    max: 500, // Limit each IP to 500 requests per windowMs
+    message: 'Too many requests from this IP, please try again later'
 });
-app.use('/api/', limiter);
+app.use('/api/', globalLimiter);
+
+// Rate limiting - Auth Routes (Strict)
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // Limit each IP to 20 login/register attempts
+    message: 'Too many login attempts, please try again after 15 minutes'
+});
+app.use('/api/auth/', authLimiter);
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
