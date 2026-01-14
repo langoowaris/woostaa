@@ -460,7 +460,9 @@
                 return;
             }
 
-            await loadUserProfile();
+            const profileLoaded = await loadUserProfile();
+            if (!profileLoaded) return; // Stop if profile incomplete/redirecting
+
             await loadServiceDetails();
             setupFormHandlers();
             setMinDate();
@@ -482,14 +484,18 @@
                 userProfile = await response.json();
                 console.log('User profile loaded:', userProfile.profile?.apartmentName);
 
-                // Check if profile is complete before allowing booking
+                // STRICT CHECK: Profile must be complete to see pricing
                 if (!isProfileComplete(userProfile)) {
-                    showProfileIncompleteModal();
-                    return;
+                    console.warn('Profile incomplete - redirecting to profile page');
+                    localStorage.setItem('pendingService', serviceName || '');
+                    window.location.href = '/profile';
+                    return false; // Stop loading
                 }
+                return true; // Proceed
             } catch (error) {
                 console.error('Error loading user profile:', error);
                 showError('Failed to load user profile. Please try refreshing the page.');
+                return false;
             }
         }
 
