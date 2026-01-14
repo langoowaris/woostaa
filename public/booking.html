@@ -444,11 +444,8 @@
         if (!token) {
             localStorage.setItem('pendingService', serviceName);
             window.location.href = '/login?redirect=booking';
-        } else {
-            // Show content if authenticated
-            document.body.style.visibility = 'visible';
-            document.body.style.opacity = '1';
         }
+        // Note: Body visibility is now handled after profile check in loadUserProfile
 
         let currentService = null;
         let selectedPricing = null;
@@ -491,6 +488,11 @@
                     window.location.href = '/profile';
                     return false; // Stop loading
                 }
+
+                // Profile is complete - Safe to show content now
+                document.body.style.visibility = 'visible';
+                document.body.style.opacity = '1';
+
                 return true; // Proceed
             } catch (error) {
                 console.error('Error loading user profile:', error);
