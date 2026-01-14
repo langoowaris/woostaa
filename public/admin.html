@@ -664,6 +664,12 @@
                             Orders
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-section="statistics">
+                            <i class="nav-icon bi bi-bar-chart-fill"></i>
+                            Statistics
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -907,6 +913,139 @@
                     <div class="pagination" id="ordersPagination"></div>
                 </div>
             </div>
+
+            <!-- Statistics Section -->
+            <div id="statistics-section" class="section">
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Visitor Statistics</h2>
+                        <button class="btn-secondary" onclick="refreshStatistics()">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </button>
+                    </div>
+
+                    <!-- Stats Overview Cards -->
+                    <div class="stats-grid" id="visitorStatsGrid" style="margin-bottom: 2rem;">
+                        <div class="loading">Loading statistics...</div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                        <!-- Daily Visits Chart -->
+                        <div
+                            style="background: white; border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-sm);">
+                            <h3 style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-primary);">Visits (Last
+                                30 Days)</h3>
+                            <div id="dailyVisitsChart" style="height: 250px; position: relative;">
+                                <div class="loading">Loading chart...</div>
+                            </div>
+                        </div>
+
+                        <!-- Hourly Distribution Chart -->
+                        <div
+                            style="background: white; border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-sm);">
+                            <h3 style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-primary);">Visits by
+                                Hour</h3>
+                            <div id="hourlyChart" style="height: 250px; position: relative;">
+                                <div class="loading">Loading chart...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page Popularity -->
+                    <div
+                        style="background: white; border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-primary);">Popular Pages
+                        </h3>
+                        <div id="pageStatsContainer">
+                            <div class="loading">Loading page statistics...</div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs for Tables -->
+                    <div class="tabs"
+                        style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-light); display: flex; gap: 1rem;">
+                        <button class="tab-btn active" onclick="switchStatsTab('top-visitors')" id="tab-top-visitors"
+                            style="padding: 0.5rem 1rem; border: none; background: none; cursor: pointer; border-bottom: 2px solid var(--primary-blue); font-weight: 600; color: var(--primary-blue);">
+                            Top Visitors
+                        </button>
+                        <button class="tab-btn" onclick="switchStatsTab('recent-visits')" id="tab-recent-visits"
+                            style="padding: 0.5rem 1rem; border: none; background: none; cursor: pointer; color: var(--text-secondary);">
+                            Recent Visits
+                        </button>
+                        <button class="tab-btn" onclick="switchStatsTab('customer-patterns')" id="tab-customer-patterns"
+                            style="padding: 0.5rem 1rem; border: none; background: none; cursor: pointer; color: var(--text-secondary);">
+                            Customer Patterns
+                        </button>
+                    </div>
+
+                    <!-- Top Visitors Table -->
+                    <div id="panel-top-visitors" class="stats-panel">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Visitor</th>
+                                        <th>Total Visits</th>
+                                        <th>First Visit</th>
+                                        <th>Last Visit</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topVisitorsTableBody">
+                                    <tr>
+                                        <td colspan="5" class="loading">Loading top visitors...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recent Visits Table -->
+                    <div id="panel-recent-visits" class="stats-panel" style="display: none;">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Visitor</th>
+                                        <th>Page</th>
+                                        <th>Time</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentVisitsTableBody">
+                                    <tr>
+                                        <td colspan="4" class="loading">Loading recent visits...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Customer Patterns Table -->
+                    <div id="panel-customer-patterns" class="stats-panel" style="display: none;">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Email</th>
+                                        <th>Total Visits</th>
+                                        <th>Last Visit</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customerPatternsTableBody">
+                                    <tr>
+                                        <td colspan="5" class="loading">Loading customer data...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination" id="customerPatternsPagination"></div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -1028,6 +1167,9 @@
                     break;
                 case 'orders':
                     loadOrders();
+                    break;
+                case 'statistics':
+                    loadStatistics();
                     break;
             }
         }
@@ -4311,6 +4453,327 @@
                 btn.disabled = false;
                 btn.innerText = originalText;
             }
+        }
+
+        // === STATISTICS FUNCTIONS ===
+        let currentStatsTab = 'top-visitors';
+        let customerPatternsPage = 1;
+
+        async function loadStatistics() {
+            await Promise.all([
+                loadVisitorOverview(),
+                loadDailyChart(),
+                loadHourlyChart(),
+                loadPageStats(),
+                loadTopVisitors(),
+                loadRecentVisits(),
+                loadCustomerPatterns()
+            ]);
+        }
+
+        function refreshStatistics() {
+            loadStatistics();
+        }
+
+        async function loadVisitorOverview() {
+            try {
+                const response = await makeAdminRequest('/stats/visitors');
+                if (!response?.ok) return;
+
+                const data = await response.json();
+                const stats = data.overview;
+
+                document.getElementById('visitorStatsGrid').innerHTML = `
+                    <div class="stat-card" style="border-left: 4px solid #0d6efd;">
+                        <div class="stat-number">${stats.totalUniqueVisitors}</div>
+                        <div class="stat-label">Unique Visitors</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #198754;">
+                        <div class="stat-number">${stats.totalVisits}</div>
+                        <div class="stat-label">Total Visits</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #ffc107;">
+                        <div class="stat-number">${stats.todayVisitors}</div>
+                        <div class="stat-label">Today's Visitors</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #6f42c1;">
+                        <div class="stat-number">${stats.returningVisitors}</div>
+                        <div class="stat-label">Returning Visitors</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #20c997;">
+                        <div class="stat-number">${stats.loggedInVisitors}</div>
+                        <div class="stat-label">Logged-in Customers</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #fd7e14;">
+                        <div class="stat-number">${stats.weekVisitors}</div>
+                        <div class="stat-label">Last 7 Days</div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Failed to load visitor overview:', error);
+            }
+        }
+
+        async function loadDailyChart() {
+            try {
+                const response = await makeAdminRequest('/stats/visitors/daily?days=30');
+                if (!response?.ok) return;
+
+                const data = await response.json();
+                const container = document.getElementById('dailyVisitsChart');
+
+                if (data.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #999;">No data available yet</p>';
+                    return;
+                }
+
+                const maxVisits = Math.max(...data.map(d => d.visits), 1);
+                const chartHtml = `
+                    <div style="display: flex; align-items: flex-end; height: 200px; gap: 4px; padding: 0 10px;">
+                        ${data.map(d => {
+                    const height = (d.visits / maxVisits) * 100;
+                    const date = new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    return `
+                                <div style="flex: 1; display: flex; flex-direction: column; align-items: center;" title="${date}: ${d.visits} visits">
+                                    <div style="width: 100%; background: linear-gradient(180deg, #0d6efd 0%, #6ea8fe 100%); border-radius: 4px 4px 0 0; height: ${height}%;" ></div>
+                                </div>
+                            `;
+                }).join('')}
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 10px; font-size: 0.75rem; color: #999;">
+                        <span>${new Date(data[0]?.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                        <span>${new Date(data[data.length - 1]?.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                    </div>
+                `;
+                container.innerHTML = chartHtml;
+            } catch (error) {
+                console.error('Failed to load daily chart:', error);
+            }
+        }
+
+        async function loadHourlyChart() {
+            try {
+                const response = await makeAdminRequest('/stats/visitors/hourly?days=7');
+                if (!response?.ok) return;
+
+                const data = await response.json();
+                const container = document.getElementById('hourlyChart');
+
+                const maxVisits = Math.max(...data.map(d => d.visits), 1);
+                const chartHtml = `
+                    <div style="display: flex; align-items: flex-end; height: 200px; gap: 2px;">
+                        ${data.map(d => {
+                    const height = (d.visits / maxVisits) * 100;
+                    const hourLabel = d.hour.toString().padStart(2, '0') + ':00';
+                    return `
+                                <div style="flex: 1; display: flex; flex-direction: column; align-items: center;" title="${hourLabel}: ${d.visits} visits">
+                                    <div style="width: 100%; background: ${d.visits > 0 ? '#198754' : '#e9ecef'}; border-radius: 2px 2px 0 0; height: ${Math.max(height, 2)}%;" ></div>
+                                </div>
+                            `;
+                }).join('')}
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.7rem; color: #999;">
+                        <span>00:00</span>
+                        <span>12:00</span>
+                        <span>23:00</span>
+                    </div>
+                `;
+                container.innerHTML = chartHtml;
+            } catch (error) {
+                console.error('Failed to load hourly chart:', error);
+            }
+        }
+
+        async function loadPageStats() {
+            try {
+                const response = await makeAdminRequest('/stats/visitors/pages?days=30');
+                if (!response?.ok) return;
+
+                const data = await response.json();
+                const container = document.getElementById('pageStatsContainer');
+
+                if (data.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #999;">No page data available</p>';
+                    return;
+                }
+
+                const maxVisits = data[0]?.visits || 1;
+                container.innerHTML = `
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        ${data.slice(0, 10).map(p => `
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 150px; font-weight: 500; color: var(--text-primary);">${p.page}</span>
+                                <div style="flex: 1; background: #e9ecef; border-radius: 4px; height: 24px; overflow: hidden;">
+                                    <div style="width: ${(p.visits / maxVisits) * 100}%; background: linear-gradient(90deg, #0d6efd 0%, #6ea8fe 100%); height: 100%; display: flex; align-items: center; padding-left: 8px;">
+                                        <span style="color: white; font-size: 0.8rem; font-weight: 600;">${p.visits}</span>
+                                    </div>
+                                </div>
+                                <span style="min-width: 80px; text-align: right; color: var(--text-secondary); font-size: 0.85rem;">${p.uniqueVisitors} unique</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Failed to load page stats:', error);
+            }
+        }
+
+        async function loadTopVisitors() {
+            try {
+                const response = await makeAdminRequest('/stats/visitors/top?limit=20');
+                if (!response?.ok) return;
+
+                const data = await response.json();
+                const tbody = document.getElementById('topVisitorsTableBody');
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">No visitor data yet</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.map(v => `
+                    <tr>
+                        <td>
+                            ${v.user ? `<strong>${v.user.fullName}</strong><br><small>${v.user.email}</small>` : `<span style="color: #999;">Anonymous</span><br><small>${v.visitorId.substring(0, 8)}...</small>`}
+                        </td>
+                        <td><strong>${v.totalVisits}</strong></td>
+                        <td>${new Date(v.firstVisit).toLocaleDateString()}</td>
+                        <td>${new Date(v.lastVisit).toLocaleString()}</td>
+                        <td>
+                            <span class="status-badge ${v.isLoggedIn ? 'status-verified' : 'status-unverified'}">
+                                ${v.isLoggedIn ? 'Customer' : 'Anonymous'}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load top visitors:', error);
+            }
+        }
+
+        async function loadRecentVisits() {
+            try {
+                const response = await makeAdminRequest('/stats/visitors/recent?limit=50');
+                if (!response?.ok) return;
+
+                const data = await response.json();
+                const tbody = document.getElementById('recentVisitsTableBody');
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4">No recent visits</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.map(v => `
+                    <tr>
+                        <td>
+                            ${v.user ? `<strong>${v.user.fullName}</strong>` : `<span style="color: #999;">${v.visitorId.substring(0, 8)}...</span>`}
+                        </td>
+                        <td><code style="background: #f1f1f1; padding: 2px 6px; border-radius: 4px;">${v.visit.page}</code></td>
+                        <td>${new Date(v.visit.timestamp).toLocaleString()}</td>
+                        <td>
+                            <span class="status-badge ${v.isLoggedIn ? 'status-verified' : 'status-unverified'}">
+                                ${v.isLoggedIn ? 'Customer' : 'Anonymous'}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load recent visits:', error);
+            }
+        }
+
+        async function loadCustomerPatterns(page = 1) {
+            try {
+                customerPatternsPage = page;
+                const response = await makeAdminRequest(`/stats/customers?page=${page}&limit=20`);
+                if (!response?.ok) return;
+
+                const data = await response.json();
+                const tbody = document.getElementById('customerPatternsTableBody');
+
+                if (data.customers.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">No customer visit data yet</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.customers.map(c => `
+                    <tr>
+                        <td><strong>${c.fullName}</strong></td>
+                        <td>${c.email}</td>
+                        <td><strong>${c.visitStats?.totalVisits || 0}</strong></td>
+                        <td>${c.visitStats?.lastVisit ? new Date(c.visitStats.lastVisit).toLocaleString() : 'N/A'}</td>
+                        <td>
+                            <button class="btn-secondary" onclick="viewCustomerVisits('${c._id}')">View History</button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                updatePagination('customerPatternsPagination', data.pagination, loadCustomerPatterns);
+            } catch (error) {
+                console.error('Failed to load customer patterns:', error);
+            }
+        }
+
+        async function viewCustomerVisits(userId) {
+            try {
+                const response = await makeAdminRequest(`/stats/users/${userId}/visits`);
+                if (!response?.ok) return;
+
+                const data = await response.json();
+
+                const modalHtml = `
+                    <div class="modal" id="customerVisitsModal" style="display: flex;">
+                        <div class="modal-content" style="max-width: 700px;">
+                            <div class="modal-header">
+                                <h2>Visit History: ${data.user.fullName}</h2>
+                                <button class="close-modal" onclick="closeModal()">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Email:</strong> ${data.user.email}</p>
+                                <p><strong>Total Visits:</strong> ${data.visitStats.totalVisits}</p>
+                                <p><strong>Last Visit:</strong> ${data.visitStats.lastVisit ? new Date(data.visitStats.lastVisit).toLocaleString() : 'N/A'}</p>
+                                <hr style="margin: 1rem 0;">
+                                <h4 style="margin-bottom: 1rem;">Recent Visits</h4>
+                                <div style="max-height: 300px; overflow-y: auto;">
+                                    ${data.visitorRecord?.recentVisits?.length ? data.visitorRecord.recentVisits.slice().reverse().map(v => `
+                                        <div style="padding: 0.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                                            <code>${v.page}</code>
+                                            <span style="color: #999;">${new Date(v.timestamp).toLocaleString()}</span>
+                                        </div>
+                                    `).join('') : '<p style="color: #999;">No detailed visit history available</p>'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('modalContainer').innerHTML = modalHtml;
+            } catch (error) {
+                console.error('Failed to load customer visits:', error);
+            }
+        }
+
+        function switchStatsTab(tabId) {
+            // Update tab buttons
+            document.querySelectorAll('#statistics-section .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.borderBottom = 'none';
+                btn.style.fontWeight = '400';
+                btn.style.color = 'var(--text-secondary)';
+            });
+
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.add('active');
+            activeBtn.style.borderBottom = '2px solid var(--primary-blue)';
+            activeBtn.style.fontWeight = '600';
+            activeBtn.style.color = 'var(--primary-blue)';
+
+            // Show/hide panels
+            document.querySelectorAll('.stats-panel').forEach(p => p.style.display = 'none');
+            document.getElementById(`panel-${tabId}`).style.display = 'block';
+
+            currentStatsTab = tabId;
         }
     </script>
 </body>

@@ -5,6 +5,7 @@ const Service = require('../models/Service');
 const Order = require('../models/Order');
 const Apartment = require('../models/Apartment');
 const SiteStats = require('../models/SiteStats');
+const Visitor = require('../models/Visitor');
 
 // Import simple service model for worker assignments
 const SimpleService = require('../models/SimpleServices');
@@ -583,6 +584,280 @@ router.delete('/services/:type/pricing/:id', async (req, res) => {
     } catch (error) {
         console.error('Delete pricing error:', error);
         res.status(500).json({ error: 'Failed to delete pricing rule' });
+    }
+});
+
+// === VISITOR STATISTICS ===
+
+// Get all visitor stats overview
+router.get('/stats/visitors', async (req, res) => {
+    try {
+        const now = new Date();
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const weekStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const monthStart = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+        const [totalVisitors, todayVisitors, weekVisitors, monthVisitors, totalVisits, returningVisitors, loggedInVisitors, siteStats] = await Promise.all([
+            Visitor.countDocuments(),
+            Visitor.countDocuments({ lastVisit: { $gte: todayStart } }),
+            Visitor.countDocuments({ lastVisit: { $gte: weekStart } }),
+            Visitor.countDocuments({ lastVisit: { $gte: monthStart } }),
+            Visitor.aggregate([{ $group: { _id: null, total: { $sum: '$totalVisits' } } }]),
+            Visitor.countDocuments({ totalVisits: { $gt: 1 } }),
+            Visitor.countDocuments({ isLoggedIn: true }),
+            SiteStats.findOne()
+        ]);
+
+        res.json({
+            overview: {
+                totalUniqueVisitors: siteStats?.totalUniqueVisitors || totalVisitors,
+                totalVisits: totalVisits[0]?.total || 0,
+                todayVisitors,
+                weekVisitors,
+                monthVisitors,
+                returningVisitors,
+                newVisitors: totalVisitors - returningVisitors,
+                loggedInVisitors
+            }
+        });
+    } catch (error) {
+        console.error('Visitor stats error:', error);
+        res.status(500).json({ error: 'Failed to fetch visitor stats' });
+    }
+});
+
+// Get daily visits for chart (last 30 days)
+router.get('/stats/visitors/daily', async (req, res) => {
+    try {
+        const days = parseInt(req.query.days) || 30;
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - days);
+        startDate.setHours(0, 0, 0, 0);
+
+        const dailyData = await Visitor.aggregate([
+            { $unwind: '$visits' },
+            { $match: { 'visits.timestamp': { $gte: startDate } } },
+            {
+                $group: {
+                    _id: {
+                        year: { $year: '$visits.timestamp' },
+                        month: { $month: '$visits.timestamp' },
+                        day: { $dayOfMonth: '$visits.timestamp' }
+                    },
+                    visits: { $sum: 1 },
+                    uniqueVisitors: { $addToSet: '$visitorId' }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    date: {
+                        $dateFromParts: {
+                            year: '$_id.year',
+                            month: '$_id.month',
+                            day: '$_id.day'
+                        }
+                    },
+                    visits: 1,
+                    uniqueVisitors: { $size: '$uniqueVisitors' }
+                }
+            },
+            { $sort: { date: 1 } }
+        ]);
+
+        res.json(dailyData);
+    } catch (error) {
+        console.error('Daily stats error:', error);
+        res.status(500).json({ error: 'Failed to fetch daily stats' });
+    }
+});
+
+// Get hourly distribution
+router.get('/stats/visitors/hourly', async (req, res) => {
+    try {
+        const days = parseInt(req.query.days) || 7;
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - days);
+
+        const hourlyData = await Visitor.aggregate([
+            { $unwind: '$visits' },
+            { $match: { 'visits.timestamp': { $gte: startDate } } },
+            {
+                $group: {
+                    _id: { $hour: '$visits.timestamp' },
+                    visits: { $sum: 1 }
+                }
+            },
+            { $sort: { _id: 1 } },
+            {
+                $project: {
+                    _id: 0,
+                    hour: '$_id',
+                    visits: 1
+                }
+            }
+        ]);
+
+        // Fill in missing hours with 0
+        const fullHourlyData = [];
+        for (let i = 0; i < 24; i++) {
+            const existing = hourlyData.find(h => h.hour === i);
+            fullHourlyData.push({ hour: i, visits: existing?.visits || 0 });
+        }
+
+        res.json(fullHourlyData);
+    } catch (error) {
+        console.error('Hourly stats error:', error);
+        res.status(500).json({ error: 'Failed to fetch hourly stats' });
+    }
+});
+
+// Get top visitors
+router.get('/stats/visitors/top', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 20;
+
+        const topVisitors = await Visitor.find()
+            .sort({ totalVisits: -1 })
+            .limit(limit)
+            .populate('user', 'fullName email phone')
+            .select('visitorId totalVisits firstVisit lastVisit isLoggedIn user');
+
+        res.json(topVisitors);
+    } catch (error) {
+        console.error('Top visitors error:', error);
+        res.status(500).json({ error: 'Failed to fetch top visitors' });
+    }
+});
+
+// Get recent visits feed
+router.get('/stats/visitors/recent', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 50;
+
+        const recentVisitors = await Visitor.aggregate([
+            { $unwind: '$visits' },
+            { $sort: { 'visits.timestamp': -1 } },
+            { $limit: limit },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'userInfo'
+                }
+            },
+            {
+                $project: {
+                    visitorId: 1,
+                    isLoggedIn: 1,
+                    visit: '$visits',
+                    user: { $arrayElemAt: ['$userInfo', 0] }
+                }
+            }
+        ]);
+
+        res.json(recentVisitors);
+    } catch (error) {
+        console.error('Recent visits error:', error);
+        res.status(500).json({ error: 'Failed to fetch recent visits' });
+    }
+});
+
+// Get page popularity stats
+router.get('/stats/visitors/pages', async (req, res) => {
+    try {
+        const days = parseInt(req.query.days) || 30;
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - days);
+
+        const pageStats = await Visitor.aggregate([
+            { $unwind: '$visits' },
+            { $match: { 'visits.timestamp': { $gte: startDate } } },
+            {
+                $group: {
+                    _id: '$visits.page',
+                    visits: { $sum: 1 },
+                    uniqueVisitors: { $addToSet: '$visitorId' }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    page: '$_id',
+                    visits: 1,
+                    uniqueVisitors: { $size: '$uniqueVisitors' }
+                }
+            },
+            { $sort: { visits: -1 } },
+            { $limit: 20 }
+        ]);
+
+        res.json(pageStats);
+    } catch (error) {
+        console.error('Page stats error:', error);
+        res.status(500).json({ error: 'Failed to fetch page stats' });
+    }
+});
+
+// Get specific user's visit history
+router.get('/stats/users/:id/visits', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('fullName email visitStats');
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Also get their visitor record
+        const visitorRecord = await Visitor.findOne({ user: req.params.id });
+
+        res.json({
+            user: {
+                fullName: user.fullName,
+                email: user.email
+            },
+            visitStats: user.visitStats || { totalVisits: 0, visitHistory: [] },
+            visitorRecord: visitorRecord ? {
+                totalVisits: visitorRecord.totalVisits,
+                firstVisit: visitorRecord.firstVisit,
+                lastVisit: visitorRecord.lastVisit,
+                recentVisits: visitorRecord.visits.slice(-20)
+            } : null
+        });
+    } catch (error) {
+        console.error('User visits error:', error);
+        res.status(500).json({ error: 'Failed to fetch user visits' });
+    }
+});
+
+// Get customer visit patterns (logged-in users only)
+router.get('/stats/customers', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const [customers, total] = await Promise.all([
+            User.find({ 'visitStats.totalVisits': { $gt: 0 } })
+                .select('fullName email phone visitStats createdAt')
+                .sort({ 'visitStats.totalVisits': -1 })
+                .skip(skip)
+                .limit(limit),
+            User.countDocuments({ 'visitStats.totalVisits': { $gt: 0 } })
+        ]);
+
+        res.json({
+            customers,
+            pagination: {
+                total,
+                page,
+                pages: Math.ceil(total / limit),
+                limit
+            }
+        });
+    } catch (error) {
+        console.error('Customer stats error:', error);
+        res.status(500).json({ error: 'Failed to fetch customer stats' });
     }
 });
 

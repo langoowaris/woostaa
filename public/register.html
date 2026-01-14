@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Woostaa</title>
+
+    <!-- SEO -->
+    <title>Register - Woostaa | Create Your Home Services Account</title>
+    <meta name="description"
+        content="Create your free Woostaa account to access professional home services in Bangalore. Book maids, cooks, drivers, and more with verified professionals.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://woostaa.com/register">
+
     <link rel="icon" type="image/x-icon" href="img/Blue.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .auth-container {
@@ -163,6 +172,7 @@
                 opacity: 0;
                 transform: perspective(1000px) rotateX(-20deg) translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: perspective(1000px) rotateX(0deg) translateY(0);
@@ -170,24 +180,27 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 768px) {
             .auth-container {
                 padding: 1rem;
             }
-            
+
             .auth-card {
                 padding: 2rem;
             }
-            
+
             .form-row {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="auth-container">
         <div class="auth-card">
@@ -251,7 +264,7 @@
 
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const formData = {
                 fullName: document.getElementById('fullName').value,
                 email: document.getElementById('email').value,
@@ -301,7 +314,7 @@
                         showSuccess('Account created successfully! Please check your email to verify your account.');
                     }
                     registerForm.reset();
-                    
+
                     setTimeout(() => {
                         window.location.href = '/login';
                     }, 3000);
@@ -364,4 +377,5 @@
         document.getElementById('fullName').focus();
     </script>
 </body>
+
 </html>

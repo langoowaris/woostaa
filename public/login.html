@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Woostaa</title>
+
+    <!-- SEO -->
+    <title>Login - Woostaa | Access Your Home Services Account</title>
+    <meta name="description"
+        content="Login to your Woostaa account to book professional home services, track orders, and manage your service history in Bangalore.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://woostaa.com/login">
+
     <link rel="icon" type="image/x-icon" href="img/Blue.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .auth-container {
@@ -157,6 +166,7 @@
                 opacity: 0;
                 transform: perspective(1000px) rotateX(-20deg) translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: perspective(1000px) rotateX(0deg) translateY(0);
@@ -164,20 +174,23 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @media (max-width: 768px) {
             .auth-container {
                 padding: 1rem;
             }
-            
+
             .auth-card {
                 padding: 2rem;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="auth-container">
         <div class="auth-card">
@@ -237,7 +250,7 @@
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
@@ -259,12 +272,15 @@
                     // Store token and user data
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('userData', JSON.stringify(data.user));
-                    
+
                     showSuccess('Login successful! Redirecting...');
-                    
+
                     setTimeout(() => {
-                        // Check if user needs to complete profile
-                        if (!data.user.isProfileComplete) {
+                        // Admin users go directly to admin panel
+                        if (data.user.role === 'admin') {
+                            window.location.href = '/admin';
+                        } else if (!data.user.isProfileComplete) {
+                            // Regular users need to complete profile
                             window.location.href = '/profile';
                         } else if (redirectTo === 'booking') {
                             // Check for pending service
@@ -369,4 +385,5 @@
         document.getElementById('email').focus();
     </script>
 </body>
+
 </html>

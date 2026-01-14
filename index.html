@@ -1,15 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Woostaa - Professional home services in Bangalore. Book verified professionals for cleaning, cooking, driving, and more.">
-    <title>Woostaa - Professional Home Services | Book Now</title>
+
+    <!-- Primary SEO -->
+    <title>Woostaa - Professional Home Services in Bangalore | Maids, Cooks, Drivers, Deep Cleaning</title>
+    <meta name="description"
+        content="Book verified home service professionals in Bangalore. Maids, cooks, drivers, deep cleaning, pest control & car washing. Trusted by 1200+ customers. Book instantly via WhatsApp!">
+    <meta name="keywords"
+        content="home services Bangalore, maid services, cook services, driver services, deep cleaning Bangalore, pest control, car washing, house cleaning, domestic help, Woostaa, Koramangala, Whitefield, Yelahanka, Electronic City">
+    <meta name="author" content="Woostaa Housing Solutions PVT. LTD.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://woostaa.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://woostaa.com/">
+    <meta property="og:title" content="Woostaa - Professional Home Services in Bangalore">
+    <meta property="og:description"
+        content="Book verified home service professionals in Bangalore. Maids, cooks, drivers, deep cleaning & more. Trusted by 1200+ customers.">
+    <meta property="og:image" content="https://woostaa.com/img/og-image.png">
+    <meta property="og:site_name" content="Woostaa">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://woostaa.com/">
+    <meta name="twitter:title" content="Woostaa - Professional Home Services in Bangalore">
+    <meta name="twitter:description"
+        content="Book verified home service professionals in Bangalore. Maids, cooks, drivers, deep cleaning & more.">
+    <meta name="twitter:image" content="https://woostaa.com/img/og-image.png">
+
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#4a90e2">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Woostaa">
+    <meta name="geo.region" content="IN-KA">
+    <meta name="geo.placename" content="Bangalore">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="img/Blue.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" href="img/Blue.svg">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Woostaa",
+        "image": "https://woostaa.com/img/PrimaryBlueshape.svg",
+        "description": "Professional home services platform in Bangalore offering maids, cooks, drivers, deep cleaning, pest control, and car washing services.",
+        "@id": "https://woostaa.com",
+        "url": "https://woostaa.com",
+        "telephone": "+91-6362414118",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Bangalore",
+            "addressRegion": "Karnataka",
+            "addressCountry": "IN"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 12.9716,
+            "longitude": 77.5946
+        },
+        "areaServed": ["Bangalore", "Koramangala", "Whitefield", "Yelahanka", "Electronic City", "Indiranagar"],
+        "priceRange": "₹₹",
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "opens": "06:00",
+            "closes": "21:00"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "1200"
+        },
+        "sameAs": [
+            "https://www.instagram.com/woostaa.bengaluru",
+            "https://www.linkedin.com/company/woostaa-solutions"
+        ]
+    }
+    </script>
 </head>
+
 <body style="overflow: visible;">
     <!-- 3D Background Canvas -->
     <canvas id="canvas-3d"></canvas>
@@ -17,8 +106,8 @@
     <!-- Loading Screen -->
     <div class="loader" id="loader">
         <div class="loader-content">
-        <img src="img/Blue.svg" alt="Woostaa Logo" class="loader-logo-img">
-           
+            <img src="img/Blue.svg" alt="Woostaa Logo" class="loader-logo-img">
+
         </div>
     </div>
 
@@ -28,9 +117,9 @@
             <a href="#" class="logo">
                 <!-- Use either logo-image for actual logo or logo-icon for letter -->
                 <!-- <img src="your-logo-url.png" alt="Woostaa Logo" class="logo-image"> -->
-                 <img src="img/PrimaryBlueshape.svg" alt="Woostaa" class="logo-image">
-              
-            <a href="#services" class="nav-cta">Book Now</a>
+                <img src="img/PrimaryBlueshape.svg" alt="Woostaa" class="logo-image">
+
+                <a href="#services" class="nav-cta">Book Now</a>
         </nav>
     </header>
 
@@ -40,14 +129,16 @@
             <div class="shape-3d shape-sphere"></div>
             <div class="shape-3d shape-cube"></div>
         </div>
-        
+
         <div class="hero-content">
             <h1>Professional Home Services</h1>
             <h2>Expert Help at Your Doorstep in Minutes</h2>
-            <p>From deep cleaning to cooking services, connect with verified professionals for all your home needs. Quality service, transparent pricing, instant booking.</p>
-            
+            <p>From deep cleaning to cooking services, connect with verified professionals for all your home needs.
+                Quality service, transparent pricing, instant booking.</p>
+
             <div class="hero-buttons">
-                <a href="#services" class="primary-button" onclick="event.preventDefault(); document.getElementById('services').scrollIntoView({behavior: 'smooth'});">
+                <a href="#services" class="primary-button"
+                    onclick="event.preventDefault(); document.getElementById('services').scrollIntoView({behavior: 'smooth'});">
                     Book Service Now
                 </a>
                 <a href="#how-it-works" class="secondary-button">
@@ -112,7 +203,7 @@
             </div>
             <div class="service-card">
                 <div class="service-icon">
-                   <img src="img/car-wash.svg" alt="Car Wash" style="width: 3.5rem; height: 3.5rem;">
+                    <img src="img/car-wash.svg" alt="Car Wash" style="width: 3.5rem; height: 3.5rem;">
                 </div>
                 <h3>Car Washers</h3>
                 <button class="service-book-btn" onclick="showBookingOptions('Car Washing Services')">Book Now</button>
@@ -122,7 +213,8 @@
                     <i class="bi bi-droplet-fill"></i>
                 </div>
                 <h3>Deep Clean</h3>
-                <button class="service-book-btn" onclick="showBookingOptions('Deep Cleaning Services')">Book Now</button>
+                <button class="service-book-btn" onclick="showBookingOptions('Deep Cleaning Services')">Book
+                    Now</button>
             </div>
             <div class="service-card">
                 <div class="service-icon">
@@ -146,20 +238,21 @@
                     <!-- iPhone 15 Dynamic Island -->
                     <div class="dynamic-island"></div>
                     <div class="iphone-home-indicator"></div>
-                    
+
                     <div class="iphone-screen">
                         <div class="status-bar">
                             <div class="status-time" id="iphone-time">9:41</div>
                             <div class="status-indicators">
-                                
+
                                 <svg width="25" height="12" viewBox="0 0 25 12" style="vertical-align: middle;">
-                                    <rect x="0" y="2" width="20" height="8" rx="2" fill="none" stroke="#333" stroke-width="1"/>
-                                    <rect x="21" y="5" width="2" height="2" rx="0.5" fill="#333"/>
-                                    <rect x="2" y="3.5" width="15" height="5" rx="1" fill="#333"/>
+                                    <rect x="0" y="2" width="20" height="8" rx="2" fill="none" stroke="#333"
+                                        stroke-width="1" />
+                                    <rect x="21" y="5" width="2" height="2" rx="0.5" fill="#333" />
+                                    <rect x="2" y="3.5" width="15" height="5" rx="1" fill="#333" />
                                 </svg>
                             </div>
                         </div>
-                        
+
                         <div class="app-screen">
                             <div class="app-header">
                                 <div class="app-title-section">
@@ -172,11 +265,12 @@
                                     </div>
                                 </div>
                                 <div class="quick-actions">
-                                    <button class="quick-action-btn" onclick="showBookingOptions('All Services')">Book Now</button>
+                                    <button class="quick-action-btn" onclick="showBookingOptions('All Services')">Book
+                                        Now</button>
                                     <button class="quick-action-btn">Call Helper</button>
                                 </div>
                             </div>
-                            
+
                             <div class="app-content">
                                 <h2 class="services-section-title">Popular Services</h2>
                                 <div class="service-list">
@@ -190,9 +284,10 @@
                                                 <!-- <span class="service-price">From ₹200</span> -->
                                             </div>
                                         </div>
-                                        <button class="book-btn" onclick="showBookingOptions('Maid Services')">Book</button>
+                                        <button class="book-btn"
+                                            onclick="showBookingOptions('Maid Services')">Book</button>
                                     </div>
-                                    
+
                                     <div class="service-item-enhanced">
                                         <div class="service-icon-enhanced"><i class="bi bi-cup-hot-fill"></i></div>
                                         <div class="service-details-enhanced">
@@ -203,9 +298,10 @@
                                                 <!-- <span class="service-price">From ₹300</span> -->
                                             </div>
                                         </div>
-                                        <button class="book-btn" onclick="showBookingOptions('Cook Services')">Book</button>
+                                        <button class="book-btn"
+                                            onclick="showBookingOptions('Cook Services')">Book</button>
                                     </div>
-                                    
+
                                     <div class="service-item-enhanced">
                                         <div class="service-icon-enhanced"><i class="bi bi-car-front-fill"></i></div>
                                         <div class="service-details-enhanced">
@@ -216,9 +312,10 @@
                                                 <!-- <span class="service-price">From ₹400</span> -->
                                             </div>
                                         </div>
-                                        <button class="book-btn" onclick="showBookingOptions('Driver Services')">Book</button>
+                                        <button class="book-btn"
+                                            onclick="showBookingOptions('Driver Services')">Book</button>
                                     </div>
-                                    
+
                                     <div class="service-item-enhanced">
                                         <div class="service-icon-enhanced"><i class="bi bi-truck"></i></div>
                                         <div class="service-details-enhanced">
@@ -229,9 +326,10 @@
                                                 <!-- <span class="service-price">From ₹250</span> -->
                                             </div>
                                         </div>
-                                        <button class="book-btn" onclick="showBookingOptions('Car Washing Services')">Book</button>
+                                        <button class="book-btn"
+                                            onclick="showBookingOptions('Car Washing Services')">Book</button>
                                     </div>
-                                    
+
                                     <div class="service-item-enhanced">
                                         <div class="service-icon-enhanced"><i class="bi bi-droplet-fill"></i></div>
                                         <div class="service-details-enhanced">
@@ -242,7 +340,8 @@
                                                 <!-- <span class="service-price">From ₹800</span> -->
                                             </div>
                                         </div>
-                                        <button class="book-btn" onclick="showBookingOptions('Deep Cleaning Services')">Book</button>
+                                        <button class="book-btn"
+                                            onclick="showBookingOptions('Deep Cleaning Services')">Book</button>
                                     </div>
                                 </div>
                             </div>
@@ -270,12 +369,14 @@
                     <div class="step" data-step="1">
                         <div class="step-number">2</div>
                         <h3>Get Matched</h3>
-                        <p>We connect you with a verified professional based on your location and service requirements.</p>
+                        <p>We connect you with a verified professional based on your location and service requirements.
+                        </p>
                     </div>
                     <div class="step" data-step="2">
                         <div class="step-number">3</div>
                         <h3>Enjoy Quality Service</h3>
-                        <p>Our trained expert arrives on time and delivers exceptional service with guaranteed satisfaction.</p>
+                        <p>Our trained expert arrives on time and delivers exceptional service with guaranteed
+                            satisfaction.</p>
                     </div>
                 </div>
             </div>
@@ -304,51 +405,57 @@
             <div class="feature">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
                     </svg>
                 </div>
                 <div class="feature-content">
                     <h3>100% Verified Professionals</h3>
-                    <p>Every professional undergoes thorough background checks, police verification, and skill assessments for your peace of mind.</p>
+                    <p>Every professional undergoes thorough background checks, police verification, and skill
+                        assessments for your peace of mind.</p>
                 </div>
             </div>
             <div class="feature">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
                 <div class="feature-content">
                     <h3>Quality Guaranteed</h3>
-                    <p>Our professionals are expertly trained and certified. Not satisfied? We'll redo the service at no extra cost.</p>
+                    <p>Our professionals are expertly trained and certified. Not satisfied? We'll redo the service at no
+                        extra cost.</p>
                 </div>
             </div>
             <div class="feature">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                 </div>
                 <div class="feature-content">
                     <h3>Fast & Reliable</h3>
-                    <p>Quick response times with professional service. Book instantly or schedule ahead - we work around your schedule.</p>
+                    <p>Quick response times with professional service. Book instantly or schedule ahead - we work around
+                        your schedule.</p>
                 </div>
             </div>
             <div class="feature">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91 2.28.6 4.18 1.58 4.18 3.91 0 1.82-1.33 2.96-3.12 3.16z"/>
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91 2.28.6 4.18 1.58 4.18 3.91 0 1.82-1.33 2.96-3.12 3.16z" />
                     </svg>
                 </div>
                 <div class="feature-content">
                     <h3>Transparent Pricing</h3>
-                    <p>Clear, upfront pricing with no hidden charges. Pay only for the service you book. Simple and honest.</p>
+                    <p>Clear, upfront pricing with no hidden charges. Pay only for the service you book. Simple and
+                        honest.</p>
                 </div>
             </div>
             <div class="feature">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+                        <path
+                            d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
                     </svg>
                 </div>
                 <div class="feature-content">
@@ -359,12 +466,14 @@
             <div class="feature">
                 <div class="feature-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/>
+                        <path
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z" />
                     </svg>
                 </div>
                 <div class="feature-content">
                     <h3>24/7 Support</h3>
-                    <p>Round-the-clock customer support. We're always here when you need assistance or have questions.</p>
+                    <p>Round-the-clock customer support. We're always here when you need assistance or have questions.
+                    </p>
                 </div>
             </div>
         </div>
@@ -377,13 +486,14 @@
                 <h2>LOVED BY BANGALORE RESIDENTS</h2>
                 <p>Real stories from real customers across the city</p>
             </div>
-            
+
             <div class="testimonials-slider">
                 <div class="testimonials-wrapper" id="testimonialsWrapper">
                     <div class="testimonials-track" id="testimonialsTrack">
                         <div class="testimonial" data-index="0">
                             <div class="testimonial-content">
-                                <p>"Woostaa's deep cleaning service transformed my home in Koramangala. The professional was punctual, thorough, and extremely skilled. Highly recommended!"</p>
+                                <p>"Woostaa's deep cleaning service transformed my home in Koramangala. The professional
+                                    was punctual, thorough, and extremely skilled. Highly recommended!"</p>
                                 <div class="testimonial-footer">
                                     <div>
                                         <div class="testimonial-author">Priya Sharma</div>
@@ -396,10 +506,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="testimonial" data-index="1">
                             <div class="testimonial-content">
-                                <p>"The cooking service is fantastic! The chef prepared authentic South Indian meals for our family gathering in Yelahanka. Everyone loved the food quality."</p>
+                                <p>"The cooking service is fantastic! The chef prepared authentic South Indian meals for
+                                    our family gathering in Yelahanka. Everyone loved the food quality."</p>
                                 <div class="testimonial-footer">
                                     <div>
                                         <div class="testimonial-author">Rajesh Kumar</div>
@@ -412,10 +523,12 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="testimonial active" data-index="2">
                             <div class="testimonial-content">
-                                <p>"Excellent maid service in Whitefield. The professional was well-trained, trustworthy, and maintained high standards of cleanliness. Very satisfied with Woostaa."</p>
+                                <p>"Excellent maid service in Whitefield. The professional was well-trained,
+                                    trustworthy, and maintained high standards of cleanliness. Very satisfied with
+                                    Woostaa."</p>
                                 <div class="testimonial-footer">
                                     <div>
                                         <div class="testimonial-author">Anjali Reddy</div>
@@ -428,10 +541,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="testimonial" data-index="3">
                             <div class="testimonial-content">
-                                <p>"The driver service is reliable and professional. Perfect for business meetings across Bangalore. The drivers are punctual and well-mannered."</p>
+                                <p>"The driver service is reliable and professional. Perfect for business meetings
+                                    across Bangalore. The drivers are punctual and well-mannered."</p>
                                 <div class="testimonial-footer">
                                     <div>
                                         <div class="testimonial-author">Vikram Patel</div>
@@ -444,10 +558,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="testimonial" data-index="4">
                             <div class="testimonial-content">
-                                <p>"Amazing pest control service! They completely eliminated the ant problem in my apartment. Professional, clean, and effective treatment with great follow-up."</p>
+                                <p>"Amazing pest control service! They completely eliminated the ant problem in my
+                                    apartment. Professional, clean, and effective treatment with great follow-up."</p>
                                 <div class="testimonial-footer">
                                     <div>
                                         <div class="testimonial-author">Sneha Iyer</div>
@@ -462,12 +577,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="testimonial-nav">
                     <button class="nav-arrow" id="prevTestimonial" aria-label="Previous testimonial">
                         ‹
                     </button>
-                    
+
                     <div class="testimonial-dots" id="testimonialDots">
                         <div class="testimonial-dot" data-index="0"></div>
                         <div class="testimonial-dot" data-index="1"></div>
@@ -475,7 +590,7 @@
                         <div class="testimonial-dot" data-index="3"></div>
                         <div class="testimonial-dot" data-index="4"></div>
                     </div>
-                    
+
                     <button class="nav-arrow" id="nextTestimonial" aria-label="Next testimonial">
                         ›
                     </button>
@@ -497,7 +612,10 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Woostaa is a professional home services platform founded by Abdul Waris (CEO) and Aryan Raj (CFO) that connects you with verified, trained professionals for services like deep cleaning, pest control, maid services, cooking, driver services, and car washing in Bangalore. We simplify blue-collar hiring with quality, speed, and reliability.</p>
+                    <p>Woostaa is a professional home services platform founded by Abdul Waris (CEO) and Aryan Raj (CFO)
+                        that connects you with verified, trained professionals for services like deep cleaning, pest
+                        control, maid services, cooking, driver services, and car washing in Bangalore. We simplify
+                        blue-collar hiring with quality, speed, and reliability.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -506,7 +624,9 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Every professional undergoes comprehensive verification including government ID checks, police background verification, skill assessments, and in-person interviews before joining our platform. Our founders ensure each worker meets our high standards.</p>
+                    <p>Every professional undergoes comprehensive verification including government ID checks, police
+                        background verification, skill assessments, and in-person interviews before joining our
+                        platform. Our founders ensure each worker meets our high standards.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -515,7 +635,9 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>We currently serve major areas in Bangalore including Yelahanka, Koramangala, Whitefield, Electronic City, and select residential societies. We're expanding to cover more areas soon and planning expansion to Hyderabad, Pune, Mumbai, Delhi, and Noida.</p>
+                    <p>We currently serve major areas in Bangalore including Yelahanka, Koramangala, Whitefield,
+                        Electronic City, and select residential societies. We're expanding to cover more areas soon and
+                        planning expansion to Hyderabad, Pune, Mumbai, Delhi, and Noida.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -524,7 +646,9 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>You can book services through WhatsApp by clicking the booking buttons on our website or using our chat assistant. Our team will help you schedule the service at your convenience with transparent pricing and no hidden costs.</p>
+                    <p>You can book services through WhatsApp by clicking the booking buttons on our website or using
+                        our chat assistant. Our team will help you schedule the service at your convenience with
+                        transparent pricing and no hidden costs.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -533,7 +657,8 @@
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Yes! We offer a 100% satisfaction guarantee. If you're not happy with the service, we'll send another professional to redo it at no extra cost. Quality is our top priority.</p>
+                    <p>Yes! We offer a 100% satisfaction guarantee. If you're not happy with the service, we'll send
+                        another professional to redo it at no extra cost. Quality is our top priority.</p>
                 </div>
             </div>
         </div>
@@ -560,16 +685,20 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Woostaa</h3>
-                <p>Your trusted partner for professional home services in Bangalore. Founded by Abdul Waris Langoo (CEO) and Aryan Raj (CFO) to simplify blue-collar hiring with quality, speed, and reliability.</p>
+                <p>Your trusted partner for professional home services in Bangalore. Founded by Abdul Waris Langoo (CEO)
+                    and Aryan Raj (CFO) to simplify blue-collar hiring with quality, speed, and reliability.</p>
                 <div class="social-links">
                     <a href="https://www.instagram.com/woostaa.bengaluru" class="social-link" aria-label="Instagram">
                         <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z" />
                         </svg>
                     </a>
-                    <a href="https://www.linkedin.com/company/woostaa-solutions" class="social-link" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/company/woostaa-solutions" class="social-link"
+                        aria-label="LinkedIn">
                         <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                         </svg>
                     </a>
                 </div>
@@ -595,7 +724,7 @@
                 <a href="https://woostaa.com">Woostaa Housing Solutions PVT. LTD.</a>
                 <a href="#" onclick="openEmail()">📧 woostabangalore.com</a>
                 <a href="#" onclick="openWhatsAppGeneral()">📞 +91 6362414118</a>
-                
+
                 <a href="#">📍 Bangalore, Karnataka</a>
 
                 <a href="#" onclick="openChatbot()">💬 24/7 Live Chat</a>
@@ -617,7 +746,8 @@
         <div class="notification-badge" id="chatNotification" style="display: none;">1</div>
     </div>
 
-    
+
     <script src="js/scripts.js"></script>
 </body>
+
 </html>

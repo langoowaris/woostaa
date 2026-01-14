@@ -16,28 +16,121 @@ connectDB();
 
 // Visitor Tracking Middleware
 const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const SiteStats = require('./models/SiteStats');
+const Visitor = require('./models/Visitor');
+const User = require('./models/User');
+
+// Helper to hash IP for privacy
+const hashIP = (ip) => {
+    return crypto.createHash('sha256').update(ip || 'unknown').digest('hex').substring(0, 16);
+};
+
+// Helper to extract visitor ID from cookies
+const getVisitorIdFromCookies = (cookieHeader) => {
+    const cookies = cookieHeader || '';
+    const match = cookies.match(/woostaa_visitor=([^;]+)/);
+    return match ? match[1] : null;
+};
+
+// Helper to extract user ID from JWT token
+const getUserFromToken = (cookieHeader) => {
+    try {
+        const cookies = cookieHeader || '';
+        const match = cookies.match(/token=([^;]+)/);
+        if (!match) return null;
+        const decoded = jwt.verify(match[1], config.jwtSecret || process.env.JWT_SECRET);
+        return { userId: decoded.userId || decoded.id, role: decoded.role };
+    } catch {
+        return null;
+    }
+};
 
 app.use(async (req, res, next) => {
     try {
-        // Simple cookie check (cookie-parser not strictly needed for just this)
+        // Skip API and static file requests for visit tracking
+        const skipPaths = ['/api/', '/css/', '/js/', '/img/', '/favicon'];
+        if (skipPaths.some(p => req.path.startsWith(p))) {
+            return next();
+        }
+
         const cookies = req.headers.cookie || '';
-        const hasVisitorCookie = cookies.includes('woostaa_visitor=');
+        let visitorId = getVisitorIdFromCookies(cookies);
+        const userInfo = getUserFromToken(cookies);
+        const userId = userInfo?.userId;
+        const isAdmin = userInfo?.role === 'admin';
+        const isNewVisitor = !visitorId;
 
-        if (!hasVisitorCookie) {
-            // New Unique Visitor
-            const visitorId = uuidv4();
+        // Skip tracking for admin users
+        if (isAdmin) {
+            return next();
+        }
 
-            // Set cookie (Max-Age: 1 year)
+        // Generate new visitor ID if needed
+        if (!visitorId) {
+            visitorId = uuidv4();
             res.setHeader('Set-Cookie', `woostaa_visitor=${visitorId}; Path=/; Max-Age=31536000; HttpOnly`);
 
-            // Increment DB Counter
+            // Increment unique visitor counter
             await SiteStats.findOneAndUpdate(
                 {},
                 { $inc: { totalUniqueVisitors: 1 } },
                 { upsert: true, new: true, setDefaultsOnInsert: true }
             );
             console.log('👀 New Unique Visitor Counted!');
+        }
+
+        // Create visit record
+        const visitData = {
+            timestamp: new Date(),
+            page: req.path,
+            userAgent: req.headers['user-agent'],
+            ipHash: hashIP(req.ip || req.connection.remoteAddress)
+        };
+
+        // Update or create visitor record
+        await Visitor.findOneAndUpdate(
+            { visitorId },
+            {
+                $set: {
+                    lastVisit: new Date(),
+                    isLoggedIn: !!userId,
+                    user: userId || undefined
+                },
+                $inc: { totalVisits: 1 },
+                $push: {
+                    visits: {
+                        $each: [visitData],
+                        $slice: -100 // Keep only last 100 visits
+                    }
+                },
+                $setOnInsert: {
+                    firstVisit: new Date()
+                }
+            },
+            { upsert: true, new: true }
+        );
+
+        // If logged in, also update user's visit stats
+        if (userId) {
+            await User.findByIdAndUpdate(
+                userId,
+                {
+                    $set: { 'visitStats.lastVisit': new Date() },
+                    $inc: { 'visitStats.totalVisits': 1 },
+                    $push: {
+                        'visitStats.visitHistory': {
+                            $each: [{ timestamp: new Date(), page: req.path }],
+                            $slice: -50 // Keep last 50 visits per user
+                        }
+                    }
+                }
+            );
+        }
+
+        if (isNewVisitor) {
+            console.log(`📊 New visitor: ${visitorId.substring(0, 8)}...`);
         }
     } catch (error) {
         console.error('Visitor tracking error:', error);

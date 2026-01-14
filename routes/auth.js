@@ -118,12 +118,60 @@ router.post('/login', async (req, res) => {
             });
         }
 
-        // Generate JWT
+        // Generate JWT with role included
         const token = jwt.sign(
-            { id: user._id, email: user.email },
+            { id: user._id, email: user.email, role: user.role },
             config.JWT_SECRET,
             { expiresIn: '7d' }
         );
+
+        // Handle visitor tracking on login
+        try {
+            const Visitor = require('../models/Visitor');
+            const SiteStats = require('../models/SiteStats');
+            const cookies = req.headers.cookie || '';
+            const visitorMatch = cookies.match(/woostaa_visitor=([^;]+)/);
+            const visitorId = visitorMatch ? visitorMatch[1] : null;
+
+            if (visitorId) {
+                if (user.role === 'admin') {
+                    // Delete admin visitor record and decrement counter
+                    const deletedVisitor = await Visitor.findOneAndDelete({ visitorId });
+                    if (deletedVisitor) {
+                        await SiteStats.findOneAndUpdate(
+                            {},
+                            { $inc: { totalUniqueVisitors: -1 } }
+                        );
+                        console.log('🗑️ Admin visitor record deleted');
+                    }
+                } else {
+                    // For regular users: merge anonymous visit with user account
+                    const visitor = await Visitor.findOne({ visitorId });
+                    if (visitor && !visitor.user) {
+                        // Link this visitor to the user
+                        visitor.user = user._id;
+                        visitor.isLoggedIn = true;
+                        await visitor.save();
+                        console.log('🔗 Visitor linked to user:', user.email);
+                    }
+
+                    // Record login time in user's visitStats
+                    await User.findByIdAndUpdate(user._id, {
+                        $set: { 'visitStats.lastVisit': new Date() },
+                        $inc: { 'visitStats.totalVisits': 1 },
+                        $push: {
+                            'visitStats.visitHistory': {
+                                $each: [{ timestamp: new Date(), page: '/login' }],
+                                $slice: -50
+                            }
+                        }
+                    });
+                }
+            }
+        } catch (visitorError) {
+            console.error('Visitor tracking on login error:', visitorError);
+            // Don't fail login due to tracking error
+        }
 
         res.json({
             message: 'Login successful',
