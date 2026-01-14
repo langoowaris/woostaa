@@ -14,6 +14,38 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+// Visitor Tracking Middleware
+const { v4: uuidv4 } = require('uuid');
+const SiteStats = require('./models/SiteStats');
+
+app.use(async (req, res, next) => {
+    try {
+        // Simple cookie check (cookie-parser not strictly needed for just this)
+        const cookies = req.headers.cookie || '';
+        const hasVisitorCookie = cookies.includes('woostaa_visitor=');
+
+        if (!hasVisitorCookie) {
+            // New Unique Visitor
+            const visitorId = uuidv4();
+
+            // Set cookie (Max-Age: 1 year)
+            res.setHeader('Set-Cookie', `woostaa_visitor=${visitorId}; Path=/; Max-Age=31536000; HttpOnly`);
+
+            // Increment DB Counter
+            await SiteStats.findOneAndUpdate(
+                {},
+                { $inc: { totalUniqueVisitors: 1 } },
+                { upsert: true, new: true, setDefaultsOnInsert: true }
+            );
+            console.log('👀 New Unique Visitor Counted!');
+        }
+    } catch (error) {
+        console.error('Visitor tracking error:', error);
+        // Don't block request on analytics error
+    }
+    next();
+});
+
 // Disable all security headers for development
 app.use((req, res, next) => {
     // Prevent HTTPS upgrade attempts

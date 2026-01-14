@@ -1070,6 +1070,8 @@
                 if (!response?.ok) return;
 
                 const data = await response.json();
+                console.log('Dashboard Data Received:', data); // Debug Log
+                console.log('Stats:', data.stats); // Debug Log
 
                 // Update stats
                 const statsGrid = document.getElementById('statsGrid');
@@ -1090,6 +1092,10 @@
                     <div class="stat-card">
                         <div class="stat-number">${data.stats.pendingOrders}</div>
                         <div class="stat-label">Pending Orders</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #6f42c1;">
+                        <div class="stat-number">${data.stats.totalUniqueVisitors || 0}</div>
+                        <div class="stat-label">Unique Visitors</div>
                     </div>
                 `;
 

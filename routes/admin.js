@@ -4,6 +4,7 @@ const Worker = require('../models/Worker');
 const Service = require('../models/Service');
 const Order = require('../models/Order');
 const Apartment = require('../models/Apartment');
+const SiteStats = require('../models/SiteStats');
 
 // Import simple service model for worker assignments
 const SimpleService = require('../models/SimpleServices');
@@ -35,7 +36,8 @@ router.get('/dashboard/stats', async (req, res) => {
             totalOrders,
             totalApartments,
             recentOrders,
-            pendingOrders
+            pendingOrders,
+            siteStats
         ] = await Promise.all([
             User.countDocuments({ role: 'user' }),
             Worker.countDocuments(),
@@ -46,7 +48,8 @@ router.get('/dashboard/stats', async (req, res) => {
                 select: 'name',
                 options: { retainNullValues: false }
             }),
-            Order.countDocuments({ status: 'pending' })
+            Order.countDocuments({ status: 'pending' }),
+            SiteStats.findOne()
         ]);
 
         res.json({
@@ -55,7 +58,8 @@ router.get('/dashboard/stats', async (req, res) => {
                 totalWorkers,
                 totalOrders,
                 totalApartments,
-                pendingOrders
+                pendingOrders,
+                totalUniqueVisitors: siteStats ? siteStats.totalUniqueVisitors : 0
             },
             recentOrders
         });
