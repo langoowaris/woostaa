@@ -10,6 +10,6 @@ module.exports = {
     EMAIL_PASS: process.env.EMAIL_PASS || 'gpjb vuxo idyd ypue',
     RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID || '',
     RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET || '',
-    BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
+    BASE_URL: process.env.BASE_URL || 'https://woostaa.com',
     ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'woostabangalore@gmail.com'
 };
