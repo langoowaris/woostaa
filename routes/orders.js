@@ -99,38 +99,101 @@ router.post('/create', auth, async (req, res) => {
 
         console.log('✅ Phone number verified for order:', user.phone);
 
-        // Calculate total amount based on input format
-        let finalAmount;
+        // Initialize final calculation variables
+        let finalAmount = 0;
         let finalScheduledDate;
         let finalScheduledTime;
         let finalSpecialInstructions;
 
-        if (totalAmount !== undefined) {
-            // New booking page format
-            finalAmount = totalAmount;
+        // Determine date/time/instructions from payload
+        if (preferredDate && preferredTime) {
             finalScheduledDate = new Date(`${preferredDate}T${preferredTime}`);
             finalScheduledTime = preferredTime;
             finalSpecialInstructions = specialRequests;
         } else {
-            // Legacy format - calculate amount
-            finalAmount = service.basePrice;
+            finalScheduledDate = new Date(scheduledDate);
+            finalScheduledTime = scheduledTime;
+            finalSpecialInstructions = specialInstructions;
+        }
 
-            // Add duration-based pricing for hourly services
-            if (planType === 'hourly') {
-                const hours = Math.ceil(duration / 60);
-                finalAmount = service.basePrice * hours;
+        // --- SECURE PRICING LOGIC ---
+        // 1. Get all pricing items (handle both schema structures)
+        const allPricingItems = service.pricingMatrix || service.pricing || [];
+
+        // 2. Filter based on user apartment (Replicating frontend logic secure-side)
+        let relevantPricingItem = null;
+
+        if (allPricingItems.length > 0) {
+            // Check if user has specific pricing available
+            const userApartmentName = user.profile.apartmentName;
+
+            let apartmentSpecificItems = [];
+            let genericItems = [];
+
+            allPricingItems.forEach(item => {
+                const hasApartmentRestriction = item.apartmentIds && item.apartmentIds.length > 0;
+                if (!hasApartmentRestriction) {
+                    genericItems.push(item);
+                } else if (userApartmentName && item.apartmentNames && item.apartmentNames.length > 0) {
+                    const matches = item.apartmentNames.some(name =>
+                        name.toLowerCase().includes(userApartmentName.toLowerCase()) ||
+                        userApartmentName.toLowerCase().includes(name.toLowerCase())
+                    );
+                    if (matches) apartmentSpecificItems.push(item);
+                }
+            });
+
+            // Select the best list
+            let availableItems = apartmentSpecificItems.length > 0 ? apartmentSpecificItems : genericItems;
+
+            // Find specific option if 'pricingOption' is provided (e.g. "Toilets Cleaning (1-3)")
+            // Otherwise default to the first available item (e.g. "Maid Services")
+            if (pricingOption) {
+                relevantPricingItem = availableItems.find(item => item.displayName === pricingOption) || availableItems[0];
+            } else {
+                relevantPricingItem = availableItems[0];
+            }
+        }
+
+        if (relevantPricingItem) {
+            // Case A: New Pricing Structure (Hourly/Packet based)
+            console.log('💰 Using secure pricing item:', relevantPricingItem.displayName);
+
+            const baseRate = relevantPricingItem.baseRate || 0;
+            const additionalRate = relevantPricingItem.additionalRate || 0;
+            const minHours = relevantPricingItem.minHours || 1;
+
+            // Calculate duration in hours (incoming duration is in minutes)
+            const hours = duration ? Math.ceil(duration / 60 * 2) / 2 : minHours; // Round to nearest 0.5
+
+            // Formula: Base Rate + (Extra Hours * Rate)
+            if (hours <= minHours) {
+                finalAmount = baseRate;
+            } else {
+                const extraHours = hours - minHours;
+                finalAmount = baseRate + (extraHours * additionalRate);
             }
 
-            // Add factor-based pricing
+            // Start logging mismatches
+            if (totalAmount && Math.abs(finalAmount - totalAmount) > 5) { // 5 rupee tolerance
+                console.warn(`⚠️ PRICE MISMATCH! Client sent: ${totalAmount}, Server calculated: ${finalAmount}. Enforcing server price.`);
+            }
+        } else {
+            // Case B: Legacy / Factor Pricing (Fallback)
+            // If no specific pricing matrix found, use basePrice + factors
+            console.log('⚠️ No pricing matrix found, falling back to legacy calculation');
+            finalAmount = service.basePrice || 0;
+
+            if (planType === 'hourly' && duration) {
+                const hours = Math.ceil(duration / 60);
+                finalAmount = (service.basePrice || 0) * hours;
+            }
+
             if (selectedFactors && selectedFactors.length > 0) {
                 selectedFactors.forEach(factor => {
                     finalAmount += factor.additionalCost || 0;
                 });
             }
-
-            finalScheduledDate = new Date(scheduledDate);
-            finalScheduledTime = scheduledTime;
-            finalSpecialInstructions = specialInstructions;
         }
 
         // Create order with proper field mapping
